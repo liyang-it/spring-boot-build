@@ -1,0 +1,28 @@
+# 主程序 yml配置
+spring:
+  profiles:
+    active: db_test
+  messages:
+    encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+server:
+  port: 8080
+  compression:
+    enabled: true
+    min-response-size: 2048
+    mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
+  servlet:
+    context-path: /jishi
+  tomcat:
+    min-spare-threads: 100
+    max-threads: 800
+    accept-count: 700
+logging:
+  config: classpath:logback-spring.xml

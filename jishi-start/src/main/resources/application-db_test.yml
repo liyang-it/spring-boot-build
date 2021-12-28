@@ -1,0 +1,50 @@
+## 本地 mysql - redis
+spring:
+  datasource:
+    druid:
+      url:  jdbc:mysql://127.0.0.1:3306/jishi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&rewriteBatchedStatements=true
+      driver-class-name:  com.mysql.cj.jdbc.Driver
+      username:  root
+      password:
+      initial-size:  10
+      max-active:  50
+      min-idle:  10
+      max-wait:  60000
+      pool-prepared-statements:  true
+      max-pool-prepared-statement-per-connection-size:  20
+      validation-query:  SELECT 1 FROM DUAL
+      test-on-borrow:  false
+      test-on-return:  false
+      test-while-idle:  true
+      time-between-eviction-runs-millis:  60000
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: false
+      filter:
+        stat:
+          enabled: false
+  redis:
+    # 地址
+    host: 127.0.0.1
+    # 端口号
+    port: 6379
+    # 密码
+    password:
+    # 超时时间，单位毫秒
+    timeout: 10000
+    # 数据库编号
+    database: 1
+    # 配置lettuce
+    lettuce:
+      pool:
+        # 连接池中的最小空闲连接
+        min-idle: 100
+        # 连接池中的最大空闲连接
+        max-idle: 600
+        # 连接池最大连接数（使用负值表示没有限制,不要配置过大，否则可能会影响redis的性能）
+        max-active: 1000
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）；单位毫秒
+        max-wait: 5000
+      #关闭超时时间；单位毫秒
+      shutdown-timeout: 2000
