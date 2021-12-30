@@ -2,6 +2,8 @@ package com.mh.jishi.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mh.jishi.entity.TPageContent;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
 
 /**
@@ -11,4 +13,6 @@ import org.mapstruct.Mapper;
  **/
 @Mapper
 public interface TPageContentMapper extends BaseMapper<TPageContent> {
+    @Select("select count(id) from t_page_content where keyword = #{keyword} ")
+    int queryDefaultKey(@Param("keyword") String keyword);
 }

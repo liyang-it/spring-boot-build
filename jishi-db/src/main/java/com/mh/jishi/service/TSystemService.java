@@ -12,4 +12,8 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class TSystemService extends ServiceImpl<TSystemMapper, TSystem> {
+    public String getValue(String key){
+        String value = this.baseMapper.getKeyValue(key);
+        return value;
+    }
 }
