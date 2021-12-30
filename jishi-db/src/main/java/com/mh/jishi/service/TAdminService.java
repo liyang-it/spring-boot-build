@@ -39,7 +39,6 @@ public class TAdminService extends ServiceImpl<TAdminMapper, TAdmin> {
         QueryWrapper<TAdmin> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("id", "username", "avatar", "role_ids");
         queryWrapper.like(org.apache.commons.lang3.StringUtils.isNotBlank(username), "username", username);
-        queryWrapper.eq("type", type);
         queryWrapper.eq("deleted", 0);
         if(order.equals("desc")){
             queryWrapper.orderByDesc(sort);
