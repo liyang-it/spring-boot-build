@@ -51,6 +51,7 @@ public class tencentSms {
     // 系统启动初始化默认值
     @PostConstruct
     public void init(){
+        // 查询数据库初始化短信
         logger.info("初始化腾讯云短信配置完成, 【{}】", toString());
     }
     /**
