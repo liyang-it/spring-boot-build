@@ -35,4 +35,35 @@ public class TPermissionService extends ServiceImpl<TPermissionMapper, TPermissi
 
         return permissions;
     }
+
+    public Set<String> queryByRoleId(Integer roleId) {
+        Set<String> permissions = new HashSet<String>();
+        if(roleId == null){
+            return permissions;
+        }
+
+        QueryWrapper<TPermission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id", roleId);
+        queryWrapper.eq("permission", "*");
+        queryWrapper.eq("deleted", 0);
+        List<TPermission> permissionList = this.baseMapper.selectList(queryWrapper);
+
+        for(TPermission permission : permissionList){
+            permissions.add(permission.getPermission());
+        }
+
+        return permissions;
+    }
+
+    public boolean checkSuperPermission(Integer roleId) {
+        if(roleId == null){
+            return false;
+        }
+
+        QueryWrapper<TPermission> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("role_id", roleId);
+        queryWrapper.eq("permission", "*");
+        queryWrapper.eq("deleted", 0);
+        return this.baseMapper.selectCount(queryWrapper) != 0;
+    }
 }

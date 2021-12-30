@@ -1,11 +1,15 @@
 package com.mh.jishi.service;
 
+import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mh.jishi.entity.TRole;
 import com.mh.jishi.mapper.TRoleMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,5 +37,30 @@ public class TRoleService extends ServiceImpl<TRoleMapper, TRole> {
         }
         return roles;
 
+    }
+
+    public void add(TRole role) {
+        role.setAddTime(LocalDateTime.now());
+        role.setUpdateTime(LocalDateTime.now());
+        this.baseMapper.insert(role);
+    }
+    public IPage<TRole> querySelective(String name, Integer page, Integer limit, String sort, String order) {
+        IPage<TRole> iPage = new Page<>(page, limit);
+        QueryWrapper<TRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(!StringUtils.isEmpty(name), "name", name);
+        queryWrapper.eq("deleted", 0);
+        if(order.equals("desc")){
+            queryWrapper.orderByDesc(sort);
+        }else{
+            queryWrapper.orderByAsc(sort);
+        }
+        iPage = this.baseMapper.selectPage(iPage, queryWrapper);
+        return iPage;
+    }
+    public boolean checkExist(String name) {
+        QueryWrapper<TRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name", name);
+        queryWrapper.eq("deleted", 0);
+        return this.baseMapper.selectCount(queryWrapper) != 0;
     }
 }
