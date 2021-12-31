@@ -1,4 +1,4 @@
-package com.mh.jishi.web;
+package com.mh.jishi.app;
 
 import com.mh.jishi.annotation.ApiDesc;
 import com.mh.jishi.annotation.LoginUser;

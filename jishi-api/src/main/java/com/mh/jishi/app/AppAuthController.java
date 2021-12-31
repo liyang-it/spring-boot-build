@@ -1,4 +1,4 @@
-package com.mh.jishi.web;
+package com.mh.jishi.app;
 
 import com.mh.jishi.annotation.ApiDesc;
 import com.mh.jishi.annotation.LoginUser;
@@ -7,7 +7,6 @@ import com.mh.jishi.service.CaptchaCodeManager;
 import com.mh.jishi.service.TUserService;
 import com.mh.jishi.service.UserTokenManager;
 import com.mh.jishi.util.*;
-import com.mh.jishi.util.bcrypt.BCryptPasswordEncoder;
 import com.mh.jishi.vo.UserInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.mh.jishi.web;
+package com.mh.jishi.app;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

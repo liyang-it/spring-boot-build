@@ -23,7 +23,7 @@ import java.util.Arrays;
 @Slf4j
 public class AdminLoggerAspect {
     //连接点
-    @Pointcut(value = "execution(* com.mh.jishi.web..*(..)))")
+    @Pointcut(value = "execution(* com.mh.jishi.admin..*(..)))")
     public void logPointcut() {
     }
 
