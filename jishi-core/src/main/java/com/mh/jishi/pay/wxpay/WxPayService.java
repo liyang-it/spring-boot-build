@@ -58,6 +58,7 @@ public class WxPayService {
         orderParam.put("trade_type", "MWEB");
         String key = systemService.getValue(WxPayConstants.Key);
         orderParam.put("sign", WXPayUtil.generateSignature(orderParam,key));
+        orderParam.put("key", key);
         WXPay wxPay = new WXPay(new WXPayConfig(orderParam));
         Map<String, String> resultMap = wxPay.unifiedOrder(orderParam);
         Map<String, String> returnMap = new HashMap<>(16);
@@ -107,6 +108,7 @@ public class WxPayService {
         orderParam.put("trade_type", "JSAPI");
         String key = systemService.getValue(WxPayConstants.Key);
         orderParam.put("sign", WXPayUtil.generateSignature(orderParam,key));
+        orderParam.put("key", key);
         WXPay wxPay = new WXPay(new WXPayConfig(orderParam));
         Map<String, String> resultMap = wxPay.unifiedOrder(orderParam);
         Map<String, String> returnMap = new HashMap<>(16);
@@ -153,6 +155,7 @@ public class WxPayService {
         orderParam.put("trade_type", "JSAPI");
         String key = systemService.getValue(WxPayConstants.Key);
         orderParam.put("sign", WXPayUtil.generateSignature(orderParam,key));
+        orderParam.put("key", key);
         WXPay wxPay = new WXPay(new WXPayConfig(orderParam));
         Map<String, String> resultMap = wxPay.unifiedOrder(orderParam);
         Map<String, String> returnMap = new HashMap<>(16);
@@ -200,6 +203,7 @@ public class WxPayService {
         orderParam.put("trade_type", "APP");
         String key = systemService.getValue(WxPayConstants.Key);
         orderParam.put("sign", WXPayUtil.generateSignature(orderParam,key));
+        orderParam.put("key", key);
         WXPay wxPay = new WXPay(new WXPayConfig(orderParam));
         Map<String, String> resultMap = wxPay.unifiedOrder(orderParam);
         Map<String, String> returnMap = new HashMap<>(16);
