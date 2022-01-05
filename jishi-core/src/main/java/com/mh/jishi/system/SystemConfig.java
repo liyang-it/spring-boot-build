@@ -10,7 +10,14 @@ import java.util.Map;
 public class SystemConfig {
 
 
-    //所有的配置均保存在该 HashMap 中
-    private static Map<String, String> SYSTEM_CONFIGS = new HashMap<>();
+    /**
+     * 系统配置前缀
+     */
+    public final static String prefix = "System.";
+
+    /**
+     * 注册默认头像
+     */
+    public final static String DefaultAvatart = "System.DefaultAvatart";
 
 }

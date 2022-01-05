@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+import java.util.Map;
+
 @Mapper
 public interface TSystemMapper extends BaseMapper<TSystem> {
     /**
@@ -15,6 +18,9 @@ public interface TSystemMapper extends BaseMapper<TSystem> {
      */
     @Select("select key_value from t_system where deleted = 0 and key_name = #{keyName}")
     String getKeyValue(@Param("keyName") String name);
+
+    @Select(" <script> select key_name, key_value from t_system where key_name like concat(#{pre},'%') </script> ")
+    List<Map<String, String>> queryKeyAndValueByLikeKey(String pre);
 
 
 }
