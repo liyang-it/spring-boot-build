@@ -30,6 +30,11 @@
         <maven.test.skip>true</maven.test.skip>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>cn.jpush.api</groupId>
+            <artifactId>jpush-client</artifactId>
+            <version>3.2.3</version>
+        </dependency>
         <!-- shiro-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
