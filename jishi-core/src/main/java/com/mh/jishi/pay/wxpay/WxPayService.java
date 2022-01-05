@@ -37,6 +37,10 @@ public class WxPayService {
     /**
      * Map<String, String> orderParam 参数说明：
      *
+     *  orderParam.put("body", "支付內容");
+     *  orderParam.put("out_trade_no", "後台生成的订单号");
+     *  orderParam.put("total_fee", “支付金额，单位为 分”);
+     *
      */
 
 
