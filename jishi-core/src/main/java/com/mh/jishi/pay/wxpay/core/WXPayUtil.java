@@ -28,6 +28,31 @@ public class WXPayUtil {
     private static final Random RANDOM = new SecureRandom();
 
     /**
+     * 是否签名正确,规则是:按参数名称a-z排序,遇到空值的参数不参加签名。
+     * @return boolean
+     */
+    public static boolean isTenpaySign(SortedMap<Object, Object> packageParams, String API_KEY) throws Exception {
+        StringBuffer sb = new StringBuffer();
+        Set es = packageParams.entrySet();
+        Iterator it = es.iterator();
+        while(it.hasNext()) {
+            Map.Entry entry = (Map.Entry)it.next();
+            String k = entry.getKey().toString();
+            String v = entry.getValue().toString();
+            if(!"sign".equals(k) && null != v && !"".equals(v)) {
+                sb.append(k + "=" + v + "&");
+            }
+        }
+
+        sb.append("key=" + API_KEY);
+        //算出摘要
+        String mySign = MD5(sb.toString()).toUpperCase();
+        String tenpaySign = ((String)packageParams.get("sign"));
+
+        return tenpaySign.equals(mySign);
+    }
+
+    /**
      * XML格式字符串转换为Map
      *
      * @param strXML XML字符串
