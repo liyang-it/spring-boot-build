@@ -17,13 +17,17 @@ spring:
       test-on-return:  false
       test-while-idle:  true
       time-between-eviction-runs-millis:  60000
-      webStatFilter:
+      webStatFilter: # 开启druid监控, 访问: http:程序路径/druid.login.html
         enabled: true
       statViewServlet:
-        enabled: false
+        enabled: true
+        login-username: admin # Druid监控后台用户名 
+        login-password: admin # Druid监控后台密码
       filter:
         stat:
-          enabled: false
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 2000
   redis:
     # 地址
     host: 127.0.0.1
