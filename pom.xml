@@ -14,7 +14,6 @@
         <module>jishi-api</module>
         <module>jishi-admin</module>
         <module>jishi-start</module>
-        <module>netty-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
