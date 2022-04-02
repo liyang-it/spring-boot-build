@@ -1,8 +1,9 @@
 ### 这是一个springboot程序模版
 > 用来开发新项目的时候不需要再去搭建，直接用模版
 
+#### JDK版本需要 1.8
 #### 整合的功能
-* 独立socket程序， 独立socket单独下载
+* 独立socket程序， 独立socket单独下载(去除，单独一个仓库)
 * 后台管理shiro权限控制
 * 移动端api jwt+token
 * 腾讯云短信模版
@@ -15,6 +16,8 @@
 * 对象存储配置
 * 微信支付、支付宝支付、苹果支付配置
 * 支付回调控制层
+* Swagger 支持
+* Druid 数据监控
 * 待整合RabbitMQ。。。
 
 #### 结构说明
@@ -26,6 +29,5 @@
 * **jishi-core** : 核心
 * **jishi-db** : 数据库相关
 * **jishi-start** : 程序启动
-* **netty-demo** : socket程序
 * **logs** : 主程序日志目录
 * **netty-logs** : socket程序日志目录
