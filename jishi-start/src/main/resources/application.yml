@@ -20,9 +20,19 @@ server:
     mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
   servlet:
     context-path: /jishi
-  tomcat:
-    min-spare-threads: 100
-    max-threads: 800
-    accept-count: 700
+      # 使用  undertow 替代 tomcat
+  undertow:
+    accesslog:
+      enabled: false
+    max-http-post-size: 0
+    io-threads: 16
+    worker-threads: 128
+    buffer-size: 1024
+    direct-buffers: true
+  # 去除tomcat, 使用 undertow
+#   tomcat:
+#     min-spare-threads: 100
+#     max-threads: 800
+#     accept-count: 700
 logging:
   config: classpath:logback-spring.xml
