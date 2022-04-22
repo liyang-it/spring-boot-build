@@ -30,8 +30,11 @@ public class AppLoggerAspect {
     public void logPointcut() {
     }
 
-    //记录当前线程程序运行时间
-    ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+    /**
+    * 记录当前线程程序运行时间
+    * 使用 Netty 的 FastThreadLocal 替代 Jdk的 ThreadLocal
+    */
+    FastThreadLocal<Long> startTime = new FastThreadLocal<Long>();
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss");
 
     // controller 前置通知
