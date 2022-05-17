@@ -38,7 +38,7 @@ public class redisConfig {
         om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
          //LocalDatetime序列化
         JavaTimeModule timeModule = new JavaTimeModule();
-        timeModule.addDeserializer(LocalDate.class,
+        timeModule.addDeserializer(LocalDate.class, 
                 new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         timeModule.addDeserializer(LocalDateTime.class,
                 new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
