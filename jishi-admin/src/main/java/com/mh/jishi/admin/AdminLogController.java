@@ -27,7 +27,7 @@ public class AdminLogController {
     }
 
     @GetMapping(value = "/downLog")
-    public void downLog(@RequestParam(defaultValue = "1") Integer type, @RequestParam(defaultValue = "") String nowDate, HttpServletRequest request, HttpServletResponse response){
+    public void downLog(@RequestParam(defaultValue = "1") Integer type, String nowDate, HttpServletRequest request, HttpServletResponse response){
         service.downLog(type, nowDate, request, response);
     }
 }
