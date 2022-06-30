@@ -51,12 +51,18 @@ public class StartApplication {
         if(StringUtils.isBlank(statViewServlet)){
             statViewServlet = "false";
         }
-        log.info("是否开启 Druid监控： 【{}】", statViewServlet);
+        log.info("是否开启 Druid监控：【{}】", statViewServlet);
         if(statViewServlet.equals("true")){
             String DruidUserName = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
             String DruidPassword = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
-            log.info("Druid访问路径： 【{}/druid/login.html】, 登录用户名：【{}】， 密码：【{}】", contextPath, DruidUserName, DruidPassword);
+            log.info("Druid访问路径：【{}/druid/login.html】", contextPath);
+            log.info("Druid 登录用户名：【{}】", DruidUserName);
+            log.info("Druid 登录密码：【{}】", DruidPassword);
         }
-        log.info("============服务启动成功, 访问路径:【{}】, 端口号: 【{}】, 启动时间：【{}】============", contextPath, port, LocalDateTime.now());
+
+        log.info("服务访问路径：【{}】", contextPath);
+        log.info("服务访问端口：【{}】", port);
+        log.info("服务启动时间：【{}】", LocalDateTime.now());
+        log.info("=================  服务启动成功  =================");
 
 }
