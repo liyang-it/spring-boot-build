@@ -94,7 +94,7 @@ public class AdminLogService {
             response.setContentLength((int) file.length());
             // 设置响应内容的长度
             response.setHeader("file-length", String.valueOf(file.length()));
-            //通过文件管道获取飞一般的下载速度
+            //通过文件管道下载输出
             WritableByteChannel writableByteChannel = Channels.newChannel(response.getOutputStream());
             FileChannel fileChannel = new FileInputStream(file.getAbsolutePath()).getChannel();
             fileChannel.transferTo(0, fileChannel.size(), writableByteChannel);
