@@ -1,5 +1,6 @@
 package com.mh.jishi.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,8 @@ import java.util.concurrent.TimeUnit;
  * @CreateTime $ 2021-08-07
  **/
 @Component
+@SuppressWarnings("all")
+@Slf4j
 public class RedisUtil {
 
     @Autowired
@@ -34,7 +37,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "expire", e);
             return false;
         }
     }
@@ -59,7 +62,7 @@ public class RedisUtil {
         try {
             return redisTemplate.hasKey(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "hasKey", e);
             return false;
         }
     }
@@ -104,7 +107,7 @@ public class RedisUtil {
             redisTemplate.opsForValue().set(key, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "set", e);
             return false;
         }
 
@@ -127,7 +130,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "set", e);
             return false;
         }
     }
@@ -195,7 +198,7 @@ public class RedisUtil {
             redisTemplate.opsForHash().putAll(key, map);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "hmset", e);
             return false;
         }
     }
@@ -216,7 +219,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "hmset", e);
             return false;
         }
     }
@@ -234,7 +237,7 @@ public class RedisUtil {
             redisTemplate.opsForHash().put(key, item, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "hset", e);
             return false;
         }
     }
@@ -256,7 +259,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "hset", e);
             return false;
         }
     }
@@ -318,7 +321,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().members(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "sGet", e);
             return null;
         }
     }
@@ -334,7 +337,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "sHasKey", e);
             return false;
         }
     }
@@ -350,7 +353,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "sSet", e);
             return 0;
         }
     }
@@ -369,7 +372,7 @@ public class RedisUtil {
             if (time > 0) expire(key, time);
             return count;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "sSetAndTime", e);
             return 0;
         }
     }
@@ -384,7 +387,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().size(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "sGetSetSize", e);
             return 0;
         }
     }
@@ -401,7 +404,7 @@ public class RedisUtil {
             Long count = redisTemplate.opsForSet().remove(key, values);
             return count;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "setRemove", e);
             return 0;
         }
     }
@@ -419,7 +422,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lGet", e);
             return null;
         }
     }
@@ -434,7 +437,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForList().size(key);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lGetListSize", e);
             return 0;
         }
     }
@@ -450,7 +453,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForList().index(key, index);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lGetIndex", e);
             return null;
         }
     }
@@ -460,7 +463,6 @@ public class RedisUtil {
      *
      * @param key   键
      * @param value 值
-     * @param time  时间(秒)
      * @return
      */
     public boolean lSet(String key, Object value) {
@@ -468,7 +470,7 @@ public class RedisUtil {
             redisTemplate.opsForList().rightPush(key, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lSet", e);
             return false;
         }
     }
@@ -487,7 +489,7 @@ public class RedisUtil {
             if (time > 0) expire(key, time);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lSet", e);
             return false;
         }
     }
@@ -505,7 +507,7 @@ public class RedisUtil {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lSet", e);
             return false;
         }
     }
@@ -524,7 +526,7 @@ public class RedisUtil {
             if (time > 0) expire(key, time);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lSet", e);
             return false;
         }
     }
@@ -542,7 +544,7 @@ public class RedisUtil {
             redisTemplate.opsForList().set(key, index, value);
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lUpdateIndex", e);
             return false;
         }
     }
@@ -560,7 +562,7 @@ public class RedisUtil {
             Long remove = redisTemplate.opsForList().remove(key, count, value);
             return remove;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Redis工具类：【{}】方法异常，原因：", "lRemove", e);
             return 0;
         }
     }
