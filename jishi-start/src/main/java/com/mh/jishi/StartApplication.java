@@ -57,6 +57,6 @@ public class StartApplication {
             String DruidPassword = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
             log.info("Druid访问路径： 【{}/druid/login.html】, 登录用户名：【{}】， 密码：【{}】", contextPath, DruidUserName, DruidPassword);
         }
-        log.info("============服务启动成功, 访问路径:【{}】, 端口号: 【{}】============", contextPath, port);
+        log.info("============服务启动成功, 访问路径:【{}】, 端口号: 【{}】, 启动时间：【{}】============", contextPath, port, LocalDateTime.now());
 
 }
