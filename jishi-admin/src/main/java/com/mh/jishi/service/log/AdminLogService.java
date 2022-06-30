@@ -33,8 +33,8 @@ public class AdminLogService {
     public AdminLogService() {
         this.logErrorPre = "logs/error%s.log";
         this.logInfoPre = "logs/log%s.log";
-        this.logErrorName = "PMS异常日志文件-%s.text";
-        this.logInfolName = "PMS正常日志文件-%s.text";
+        this.logErrorName = "异常日志文件-%s.text";
+        this.logInfolName = "正常日志文件-%s.text";
     }
 
     /**
@@ -46,12 +46,15 @@ public class AdminLogService {
         // 文件名
         String fileName = null;
         String path = null;
+        String nowDateStr = null;
         if(StringUtils.isNotBlank(nowDate)){
+            nowDateStr = nowDate;
             nowDate = "-" + nowDate;
         }else{
             nowDate = "";
+            nowDateStr = LocalDate.now().toString();
         }
-        String nowDateStr = LocalDate.now().toString();
+
         switch (logType){
             case 1:
                 path = String.format(logInfoPre, nowDate);
