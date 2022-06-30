@@ -34,12 +34,29 @@ import java.time.Duration;
 @EnableAsync
 @EnableTransactionManagement
 @EnableScheduling
+@Slf4j
 public class StartApplication {
-    private final  static Logger LOGGER = LoggerFactory.getLogger(StartApplication.class);
     public static void main(String[] args) throws Exception {
+        // ES设置
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(StartApplication.class, args);
-        LOGGER.info("============程序启动成功============");
 
-    }
+        Environment environment = BeanUtil.getBean(Environment.class);
+        // 服务端口
+        String port = environment.getProperty("server.port");
+        // 服务访问路径
+        String contextPath = environment.getProperty("server.servlet.context-path");
+        // 是否开启 Druid监控
+        String statViewServlet = environment.getProperty("spring.datasource.druid.statViewServlet.enabled");
+        if(StringUtils.isBlank(statViewServlet)){
+            statViewServlet = "false";
+        }
+        log.info("是否开启 Druid监控： 【{}】", statViewServlet);
+        if(statViewServlet.equals("true")){
+            String DruidUserName = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
+            String DruidPassword = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
+            log.info("Druid访问路径： 【{}】, 登录用户名：【{}】， 密码：【{}】", contextPath, DruidUserName, DruidPassword);
+        }
+        log.info("============服务启动成功, 访问路径:【{}/druid】, 端口号: 【{}】============", contextPath, port);
 
 }
