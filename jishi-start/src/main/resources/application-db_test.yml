@@ -19,9 +19,8 @@ spring:
       time-between-eviction-runs-millis:  60000
       webStatFilter: # 开启druid监控, 访问: http:程序路径/druid.login.html
         exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
-        enabled: true
       statViewServlet:
-        enabled: true
+        enabled: true   # 是否开启 druid监控
         login-username: admin # Druid监控后台用户名 
         login-password: admin # Druid监控后台密码
       filter:
@@ -53,3 +52,12 @@ spring:
         max-wait: 5000
       #关闭超时时间；单位毫秒
       shutdown-timeout: 2000
+# Actuator 监控
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
