@@ -28,6 +28,11 @@
         <maven.test.skip>true</maven.test.skip>
     </properties>
     <dependencies>
+        <!-- actuator监控信息 -->
+    	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
         <!-- 支付宝支付sdk -->
         <dependency>
             <groupId>com.alipay.sdk</groupId>
