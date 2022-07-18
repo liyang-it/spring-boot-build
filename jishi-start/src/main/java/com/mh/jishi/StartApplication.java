@@ -37,10 +37,12 @@ import java.time.Duration;
 @Slf4j
 public class StartApplication {
     public static void main(String[] args) throws Exception {
-        // ES设置
+        log.info("=================  服务启动中...  =================");
         System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(StartApplication.class, args);
-
+        /**
+         * 下列代码，可以使用异步线程运行，不会影响程序主线程启动
+         */
         Environment environment = BeanUtil.getBean(Environment.class);
         // 服务端口
         String port = environment.getProperty("server.port");
@@ -51,7 +53,7 @@ public class StartApplication {
         if(StringUtils.isBlank(statViewServlet)){
             statViewServlet = "false";
         }
-        log.info("是否开启 Druid监控：【{}】", statViewServlet);
+        log.info("是否开启 Druid 数据库 监控：【{}】", statViewServlet);
         if(statViewServlet.equals("true")){
             String DruidUserName = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
             String DruidPassword = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
@@ -59,7 +61,21 @@ public class StartApplication {
             log.info("Druid 登录用户名：【{}】", DruidUserName);
             log.info("Druid 登录密码：【{}】", DruidPassword);
         }
-
+        // 是否开启 actuator 监控
+        String statActuator = environment.getProperty("management.endpoint.health.show-details");
+        if(StringUtils.isNotBlank(statActuator)) {
+        	statActuator = "true";
+        }else {
+        	statActuator = "false";
+        }
+        log.info("是否开启 Actuator 程序监控：【{}】", statActuator);
+       
+        if(statActuator.equals("true")) {
+        	 log.info("Actuator访问路径：【{}/actuator】", contextPath);
+        }
+        
+        
+        log.info("是否开启 Druid监控：【{}】", statViewServlet);
         log.info("服务访问路径：【{}】", contextPath);
         log.info("服务访问端口：【{}】", port);
         log.info("服务启动时间：【{}】", LocalDateTime.now());
