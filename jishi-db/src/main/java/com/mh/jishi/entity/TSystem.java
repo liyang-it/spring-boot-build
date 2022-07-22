@@ -35,7 +35,7 @@ public class TSystem {
     /**
      * 配置描述
      */
-    private String readme;
+    private String doc;
 
     /**
      * 配置修改时间

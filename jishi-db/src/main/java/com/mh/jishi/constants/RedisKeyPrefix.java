@@ -7,6 +7,10 @@ package com.mh.jishi.constants;
  **/
 public class RedisKeyPrefix {
     /**
+     * 接口请求限制， 第一个占位符是 接口地址, 第二个占位符是 ip
+     */
+    public final static String CurrentLimitingRequest = "pms:current-limiting:%s:%s";
+    /**
      * 页面内容前缀
      */
     public final static String PageContent = "jishi:content:page:";

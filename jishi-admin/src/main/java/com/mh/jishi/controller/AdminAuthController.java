@@ -1,4 +1,4 @@
-package com.mh.jishi.admin;
+package com.mh.jishi.controller;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;

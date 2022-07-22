@@ -1,0 +1,21 @@
+2022-07-22 17:37:48,689 INFO [restartedMain] com.mh.jishi.StartApplication [StartupInfoLogger.java : 50] Starting StartApplication on hanson with PID 2240 (F:\idea-works\build\spring-boot-build\jishi-start\target\classes started by hansonh in F:\idea-works\build\spring-boot-build)
+2022-07-22 17:37:48,691 INFO [restartedMain] com.mh.jishi.StartApplication [SpringApplication.java : 679] The following profiles are active: db_test
+2022-07-22 17:39:30,302 INFO [restartedMain] com.mh.jishi.StartApplication [StartupInfoLogger.java : 50] Starting StartApplication on hanson with PID 15092 (F:\idea-works\build\spring-boot-build\jishi-start\target\classes started by hansonh in F:\idea-works\build\spring-boot-build)
+2022-07-22 17:39:30,306 INFO [restartedMain] com.mh.jishi.StartApplication [SpringApplication.java : 679] The following profiles are active: db_test
+2022-07-22 17:40:32,222 INFO [restartedMain] com.mh.jishi.StartApplication [StartupInfoLogger.java : 50] Starting StartApplication on hanson with PID 14300 (F:\idea-works\build\spring-boot-build\jishi-start\target\classes started by hansonh in F:\idea-works\build\spring-boot-build)
+2022-07-22 17:40:32,223 INFO [restartedMain] com.mh.jishi.StartApplication [SpringApplication.java : 679] The following profiles are active: db_test
+2022-07-22 17:40:38,563 INFO [restartedMain] com.mh.jishi.sms.tencentSms [tencentSms.java : 55] 初始化腾讯云短信配置完成, 【腾讯云配置{secretId: null, secretKey: null, sdkAppId: null, templateId: null}】
+2022-07-22 17:40:40,255 INFO [restartedMain] c.m.jishi.storage.config.InitStorage [InitStorage.java : 40] 初始化七牛云配置: 【com.mh.jishi.storage.QiniuStorage@19c64c1b】
+2022-07-22 17:40:40,259 INFO [restartedMain] c.m.jishi.storage.config.InitStorage [InitStorage.java : 53] 七牛云测试上传失败，请检查七牛云配置是否正确
+2022-07-22 17:40:42,080 INFO [restartedMain] com.mh.jishi.StartApplication [StartupInfoLogger.java : 59] Started StartApplication in 10.385 seconds (JVM running for 11.283)
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 61] 是否开启 Druid 数据库 监控：【true】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 65] Druid访问路径：【/jishi/druid/login.html】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 66] Druid 登录用户名：【admin】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 67] Druid 登录密码：【admin】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 76] 是否开启 Actuator 程序监控：【true】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 79] Actuator访问路径：【/jishi/actuator】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 83] 是否开启 Druid监控：【true】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 84] 服务访问路径：【/jishi】
+2022-07-22 17:40:42,089 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 85] 服务访问端口：【8080】
+2022-07-22 17:40:42,092 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 86] 服务启动时间：【2022-07-22T17:40:42.092】
+2022-07-22 17:40:42,093 INFO [restartedMain] com.mh.jishi.StartApplication [StartApplication.java : 87] =================  服务启动成功  =================

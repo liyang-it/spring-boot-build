@@ -1,4 +1,4 @@
-package com.mh.jishi.admin;
+package com.mh.jishi.controller;
 
 import com.mh.jishi.annotation.RequiresPermissionsDesc;
 import com.mh.jishi.entity.TPageContent;

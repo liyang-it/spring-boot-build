@@ -1,6 +1,7 @@
 package com.mh.jishi.config;
 
 import com.mh.jishi.util.ResponseUtil;
+import io.netty.util.concurrent.FastThreadLocal;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -23,7 +24,7 @@ import java.util.Arrays;
 @Slf4j
 public class AdminLoggerAspect {
     //连接点
-    @Pointcut(value = "execution(* com.mh.jishi.admin..*(..)))")
+    @Pointcut(value = "execution(* com.mh.jishi.controller..*(..)))")
     public void logPointcut() {
     }
 

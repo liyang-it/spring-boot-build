@@ -9,8 +9,13 @@ import org.springframework.context.annotation.Configuration;
  * 初始化 对线存储bean
  * 这里的配置都在yml文件里面，可以改为数据库加载配置
  */
-@Configuration
-@EnableConfigurationProperties(StorageProperties.class)
+
+/**
+ * 使用 initStorage 取代
+ * @Configuration
+ * @EnableConfigurationProperties(StorageProperties.class)
+ */
+@Deprecated
 public class StorageAutoConfiguration {
 
     private final StorageProperties properties;

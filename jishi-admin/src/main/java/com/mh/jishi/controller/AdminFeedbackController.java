@@ -1,4 +1,4 @@
-package com.mh.jishi.admin;
+package com.mh.jishi.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

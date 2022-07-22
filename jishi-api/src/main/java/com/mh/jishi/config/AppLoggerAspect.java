@@ -2,6 +2,7 @@ package com.mh.jishi.config;
 
 import com.mh.jishi.annotation.ApiDesc;
 import com.mh.jishi.util.ResponseUtil;
+import io.netty.util.concurrent.FastThreadLocal;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -26,7 +27,7 @@ import java.util.Arrays;
 @Slf4j
 public class AppLoggerAspect {
     //连接点 - 切入点
-    @Pointcut(value = "execution(* com.mh.jishi.app..*(..)))")
+    @Pointcut(value = "execution(* com.mh.jishi.controller..*(..)))")
     public void logPointcut() {
     }
 
