@@ -3,9 +3,6 @@ package com.mh.jishi;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mh.jishi.util.BeanUtil;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -31,7 +27,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import redis.clients.jedis.JedisPoolConfig;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 
 
 @SpringBootApplication(scanBasePackages = {"com.mh.jishi"})
@@ -55,11 +50,11 @@ public class StartApplication {
         String contextPath = environment.getProperty("server.servlet.context-path");
         // 是否开启 Druid监控
         String statViewServlet = environment.getProperty("spring.datasource.druid.statViewServlet.enabled");
-        if (StringUtils.isBlank(statViewServlet)) {
+        if(StringUtils.isBlank(statViewServlet)){
             statViewServlet = "false";
         }
         log.info("是否开启 Druid 数据库 监控：【{}】", statViewServlet);
-        if (statViewServlet.equals("true")) {
+        if(statViewServlet.equals("true")){
             String DruidUserName = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
             String DruidPassword = environment.getProperty("spring.datasource.druid.statViewServlet.login-username");
             log.info("Druid访问路径：【{}/druid/login.html】", contextPath);
@@ -68,22 +63,22 @@ public class StartApplication {
         }
         // 是否开启 actuator 监控
         String statActuator = environment.getProperty("management.endpoint.health.show-details");
-        if (StringUtils.isNotBlank(statActuator)) {
-            statActuator = "true";
-        } else {
-            statActuator = "false";
+        if(StringUtils.isNotBlank(statActuator)) {
+        	statActuator = "true";
+        }else {
+        	statActuator = "false";
         }
         log.info("是否开启 Actuator 程序监控：【{}】", statActuator);
-
-        if (statActuator.equals("true")) {
-            log.info("Actuator访问路径：【{}/actuator】", contextPath);
+       
+        if(statActuator.equals("true")) {
+        	 log.info("Actuator访问路径：【{}/actuator】", contextPath);
         }
-
-
+        
+        
         log.info("是否开启 Druid监控：【{}】", statViewServlet);
         log.info("服务访问路径：【{}】", contextPath);
         log.info("服务访问端口：【{}】", port);
         log.info("服务启动时间：【{}】", LocalDateTime.now());
         log.info("=================  服务启动成功  =================");
-    }
+
 }

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 本地mysql
  Source Server Type    : MySQL
- Source Server Version : 50719
+ Source Server Version : 50649
  Source Host           : localhost:3306
  Source Schema         : jishi
 
  Target Server Type    : MySQL
- Target Server Version : 50719
+ Target Server Version : 50649
  File Encoding         : 65001
 
- Date: 22/07/2022 17:25:52
+ Date: 28/12/2021 17:48:12
 */
 
 SET NAMES utf8mb4;
@@ -5219,16 +5219,11 @@ CREATE TABLE `t_page_content`  (
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `status` tinyint(5) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_page_content
 -- ----------------------------
-INSERT INTO `t_page_content` VALUES (6, '預售協議', 'ysxy', '-', 1);
-INSERT INTO `t_page_content` VALUES (7, '抽獎玩法規則', 'cjwfgz', '-', 1);
-INSERT INTO `t_page_content` VALUES (8, '用戶協議', 'yhxy', '-', 1);
-INSERT INTO `t_page_content` VALUES (9, '關於我們', 'gywm', '-', 1);
-INSERT INTO `t_page_content` VALUES (10, '隱私政策', 'yszc', '-', 1);
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -8730,9 +8725,9 @@ CREATE TABLE `t_system`  (
   `add_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '逻辑删除',
-  `doc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置描述',
+  `desc_` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 75 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_system
@@ -8770,7 +8765,6 @@ INSERT INTO `t_system` VALUES (70, 'core_order_unpaid', '30', '2021-11-25 19:29:
 INSERT INTO `t_system` VALUES (71, 'core_order_unconfirm', '7', '2021-11-25 19:29:19', '2021-11-25 19:29:19', 0, '发货用户超时未确认收货,系统自动收货(时间单位:天)');
 INSERT INTO `t_system` VALUES (72, 'lucky_operation_seconds', '120', '2021-11-25 19:29:19', '2021-11-25 19:29:19', 0, '抽奖操作时间(单位秒)');
 INSERT INTO `t_system` VALUES (73, 'cust_service_url', 'www.baidu.com', '2021-12-03 13:52:35', '2021-12-03 13:52:35', 0, '客服链接url');
-INSERT INTO `t_system` VALUES (74, 'System.DefaultAvatart', 'https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90', '2022-07-22 17:24:05', NULL, 0, '用户注册默认头像');
 
 -- ----------------------------
 -- Table structure for t_user
