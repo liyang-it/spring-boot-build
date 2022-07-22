@@ -106,7 +106,7 @@ public class TSystemService extends ServiceImpl<TSystemMapper, TSystem> {
         TSystem system = new TSystem();
         system.setAddTime(LocalDateTime.now());
         system.setDeleted(false);
-        system.setReadme(doc);
+        system.setDoc(doc);
         system.setKeyName(key);
         system.setKeyValue(value);
         save(system);

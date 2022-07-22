@@ -48,6 +48,12 @@
             <version>2.3.28</version>
             <scope>compile</scope>
         </dependency>
+                <!--        mybatis-plus代码生成-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.2</version>
+        </dependency>
     </dependencies>
 
 

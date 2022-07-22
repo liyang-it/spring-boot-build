@@ -5,7 +5,7 @@ spring:
       url:  jdbc:mysql://127.0.0.1:3306/jishi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&rewriteBatchedStatements=true
       driver-class-name:  com.mysql.cj.jdbc.Driver
       username:  root
-      password:
+      password: 123456
       initial-size:  10
       max-active:  50
       min-idle:  10
