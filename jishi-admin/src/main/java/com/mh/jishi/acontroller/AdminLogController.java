@@ -1,4 +1,4 @@
-package com.mh.jishi.controller;
+package com.mh.jishi.acontroller;
 
 import com.mh.jishi.service.log.AdminLogService;
 import org.springframework.web.bind.annotation.GetMapping;

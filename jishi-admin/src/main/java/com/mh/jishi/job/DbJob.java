@@ -1,6 +1,5 @@
 package com.mh.jishi.job;
 
-import com.mh.jishi.util.DbUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 
 /**
  * 数据库定时备份任务

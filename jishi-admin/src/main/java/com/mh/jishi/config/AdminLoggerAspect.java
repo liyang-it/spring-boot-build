@@ -24,7 +24,7 @@ import java.util.Arrays;
 @Slf4j
 public class AdminLoggerAspect {
     //连接点
-    @Pointcut(value = "execution(* com.mh.jishi.controller..*(..)))")
+    @Pointcut(value = "execution(* com.mh.jishi.acontroller..*(..)))")
     public void logPointcut() {
     }
 

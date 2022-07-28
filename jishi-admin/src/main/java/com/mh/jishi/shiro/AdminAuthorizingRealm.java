@@ -63,7 +63,7 @@ public class AdminAuthorizingRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
+        // TODO 这里是后台账户密码登录逻辑
         UsernamePasswordToken upToken = (UsernamePasswordToken) token;
         String username = upToken.getUsername();
         String password = new String(upToken.getPassword());
@@ -87,5 +87,4 @@ public class AdminAuthorizingRealm extends AuthorizingRealm {
         }
         return new SimpleAuthenticationInfo(admin, password, getName());
     }
-
 }

@@ -1,28 +1,27 @@
-package com.mh.jishi.controller;
+package com.mh.jishi.acontroller;
 
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.code.kaptcha.Producer;
 import com.mh.jishi.entity.TAdmin;
-import com.mh.jishi.entity.TRoleMenu;
+import com.mh.jishi.entity.TSystemMenu;
 import com.mh.jishi.service.TAdminService;
-import com.mh.jishi.service.TRoleMenuService;
-import com.mh.jishi.service.TRoleService;
+import com.mh.jishi.service.system.AdminSystemMenuService;
 import com.mh.jishi.util.*;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
@@ -30,6 +29,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @Author Lizr
@@ -42,19 +44,25 @@ import java.util.*;
 public class AdminAuthController {
     private final Logger log = LoggerFactory.getLogger(AdminAuthController.class);
 
-    @Autowired
-    private TAdminService adminService;
-    @Autowired
-    private TRoleService roleService;
+    private final TAdminService adminService;
 
-    @Autowired
-    private TRoleMenuService LitemallRoleMenuService;
+    private final Producer kaptchaProducer;
 
-    @Autowired
-    private Producer kaptchaProducer;
+    private final RedisUtil redisUtil;
 
-    @Resource
-    private RedisUtil redisUtil;
+    private final AdminSystemMenuService systemMenuService;
+
+    private final ApplicationContext context;
+
+    private HashMap<String, String> systemPermissionsMap = null;
+
+    public AdminAuthController(TAdminService adminService, Producer kaptchaProducer, RedisUtil redisUtil, AdminSystemMenuService systemMenuService, ApplicationContext context) {
+        this.adminService = adminService;
+        this.kaptchaProducer = kaptchaProducer;
+        this.redisUtil = redisUtil;
+        this.systemMenuService = systemMenuService;
+        this.context = context;
+    }
 
     /**
      * 生产base64验证码图片
@@ -81,7 +89,7 @@ public class AdminAuthController {
         // 生成验证码
         String text = kaptchaProducer.createText();
         BufferedImage image = kaptchaProducer.createImage(text);
-        // 使用session 存储验证码
+        // 使用redis 存储验证码，也可以使用一个 静态map缓存
         log.info("后台登录 验证码:  {}", text);
         redisUtil.set("kaptcha:".concat(IpUtil.getIpAddr(request)), text, (60 * 5));
 
@@ -201,19 +209,49 @@ public class AdminAuthController {
      */
     @RequiresAuthentication
     @GetMapping("/info")
-    public Object info() throws IOException {
+    public Object info() throws IOException, ExecutionException, InterruptedException {
         Subject currentUser = SecurityUtils.getSubject();
         TAdmin admin = (TAdmin) currentUser.getPrincipal();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("id", admin.getId());
-        data.put("name", admin.getUsername());
-        data.put("avatar", admin.getAvatar());
+        Future<Object> task1 = ThreadUtil.execAsync(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                data.put("id", admin.getId());
+                data.put("name", admin.getUsername());
+                data.put("avatar", admin.getAvatar());
+                boolean checkIsSuperAdmin = admin.getIsSuperAdmin();
+                data.put("isSuperAdmin", checkIsSuperAdmin);
+                return null;
+            }
+        });
+        Future<Object> task2 = ThreadUtil.execAsync(new Callable<Object>() {
 
-        Integer[] roleIds = admin.getRoleIds();
-        Set<String> roles = roleService.queryByIds(roleIds);
+            @Override
+            public Object call() throws Exception {
+                // 查詢 管理員菜單ID
+                List<Integer> menuIds = adminService.getAdminMenuIds(admin.getId());
+                data.put("menuIds", menuIds);
+                return null;
+            }
+        });
+
+        Future<Object> task3 = ThreadUtil.execAsync(new Callable<Object>() {
+
+            @Override
+            public Object call() throws Exception {
+                // 查询管理员菜单具体内容
+                List<TSystemMenu> list = systemMenuService.queryMenuByAdminId(admin.getId());
+                data.put("menu", list);
+                return null;
+            }
+        });
+
+
+        //Integer[] roleIds = admin.getRoleIds();
+        // Set<String> roles = roleService.queryByIds(roleIds);
         // Set<String> permissions = permissionService.queryByRoleIds(roleIds);
-        data.put("roles", roles);
+        // data.put("roles", roles);
         // NOTE
         // 这里需要转换perms结构，因为对于前端而已API形式的权限更容易理解
         // data.put("perms", toApi(permissions));
@@ -221,6 +259,7 @@ public class AdminAuthController {
 //        Integer readCount = noticeMapper.queryNotReadCount(admin.getId());
 //        data.put("unReadCount", readCount);
         // 查詢 管理員角色菜單
+        /*
         QueryWrapper<TRoleMenu> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("role_id", roleIds[0]);
         Map<String, Object> menu = LitemallRoleMenuService.getMap(queryWrapper);
@@ -235,12 +274,13 @@ public class AdminAuthController {
             }
             data.put("menu", m);
         }
+
+         */
+        task1.get();
+        task2.get();
+        task3.get();
         return ResponseUtil.ok(data);
     }
-
-    @Autowired
-    private ApplicationContext context;
-    private HashMap<String, String> systemPermissionsMap = null;
 
     private Collection<String> toApi(Set<String> permissions) {
         if (systemPermissionsMap == null) {

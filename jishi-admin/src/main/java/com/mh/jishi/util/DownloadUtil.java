@@ -1,24 +1,19 @@
 package com.mh.jishi.util;
 
+import cn.hutool.core.thread.ThreadUtil;
+import com.mh.jishi.config.ServiceException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.Assert;
+
+import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.net.URLEncoder;
 import java.nio.channels.Channels;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
-
-import javax.activation.MimetypesFileTypeMap;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.util.Assert;
-
-import com.mh.jishi.config.ServiceException;
-import com.mh.jishi.entity.TStorage;
-import com.mh.jishi.storage.LocalStorage;
-
-import cn.hutool.core.thread.ThreadUtil;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * <h2>下载文件工具类</h2>

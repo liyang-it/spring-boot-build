@@ -1,4 +1,4 @@
-package com.mh.jishi.controller;
+package com.mh.jishi.acontroller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mh.jishi.annotation.RequiresPermissionsDesc;
