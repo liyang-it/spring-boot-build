@@ -17,6 +17,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="jishi-service" target="1.8" />
+      <module name="spring-boot-build" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

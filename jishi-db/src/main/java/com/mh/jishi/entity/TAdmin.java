@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mh.jishi.mybatis.JsonIntegerArrayTypeHandler;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Author Lizr
@@ -17,9 +20,13 @@ import java.time.LocalDateTime;
 @Data
 @TableName(autoResultMap = true, value = "t_admin")
 public class TAdmin {
+    @TableField(exist = false)
+    private List<Integer> menu;
 
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
+
+    private Boolean isSuperAdmin;
 
     /**
      * 用户名
@@ -39,6 +46,8 @@ public class TAdmin {
     /**
      * 登陆时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastLoginTime;
 
     /**
@@ -49,9 +58,12 @@ public class TAdmin {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime addTime;
 
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
 

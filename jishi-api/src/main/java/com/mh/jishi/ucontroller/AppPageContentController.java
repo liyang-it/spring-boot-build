@@ -1,4 +1,4 @@
-package com.mh.jishi.controller;
+package com.mh.jishi.ucontroller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

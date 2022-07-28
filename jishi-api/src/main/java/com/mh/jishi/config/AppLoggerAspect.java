@@ -27,7 +27,7 @@ import java.util.Arrays;
 @Slf4j
 public class AppLoggerAspect {
     //连接点 - 切入点
-    @Pointcut(value = "execution(* com.mh.jishi.controller..*(..)))")
+    @Pointcut(value = "execution(* com.mh.jishi.ucontroller..*(..)))")
     public void logPointcut() {
     }
 

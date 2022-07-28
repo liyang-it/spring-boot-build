@@ -1,5 +1,6 @@
 package com.mh.jishi.config;
 
+import com.mh.jishi.exception.ConcurrentUpdateException;
 import com.mh.jishi.util.ResponseUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,7 +38,15 @@ public class GlobalExceptionHandler {
     public String getRequestUrl(HttpServletRequest request){
         return request.getRequestURL().toString();
     }
-
+    @ExceptionHandler(ConcurrentUpdateException.class)
+    @ResponseBody
+    public Object ServiceException(ConcurrentUpdateException e, HttpServletRequest request) {
+        /**
+         * 自定义 运行时异常
+         */
+        log.error("系统异常, 异常原因: [更新数据失败，数据已被其他线程修改], 接口地址: [{}]", getRequestUrl(request));
+        return ResponseUtil.updateFailed();
+    }
     /** 自定义异常 处理  NoHandlerFoundException  404 异常
      * @return 根据自定义返回结果 返回对应内容
      */

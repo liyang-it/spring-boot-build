@@ -56,4 +56,23 @@ public class RedisKeyPrefix {
      */
     public final static String QueryCityGroupByHot = "jishi:city:group:hot";
 
+    /**
+     * 系统菜单总数量
+     */
+    public final static String SystemAdminMenuCount = "jishi:system:menu:count";
+
+    /**
+     * 管理员菜单，hash格式， 管理员id为键， 值为 菜单
+     */
+    public final static String SyStemAdminMenu = "jishi:system:menu:admin";
+
+    /**
+     * 所有菜单管理
+     */
+    public final static String SyStemAllMenu = "jishi:system:menu:all";
+    /**
+     * 管理员菜单ID列表， hash格式，key为管理员id， value为 id 列表
+     */
+    public final static String SystemAdminMenuIds = "jishi:system:menu:ids";
+
 }

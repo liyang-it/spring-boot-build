@@ -34,7 +34,7 @@ public class MyBatisAutoGenerator {
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.mh") // 设置父包名
-                            .moduleName("jishi") // 设置父包模块名
+                            .moduleName("com") // 设置父包模块名
                             .pathInfo(Collections.singletonMap(OutputFile.xml, "F:\\mybatis-out")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {

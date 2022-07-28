@@ -1,4 +1,4 @@
-package com.mh.jishi.controller;
+package com.mh.jishi.ucontroller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.mh.jishi.annotation.ApiDesc;

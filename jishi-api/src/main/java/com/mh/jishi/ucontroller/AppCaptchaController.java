@@ -1,4 +1,4 @@
-package com.mh.jishi.controller;
+package com.mh.jishi.ucontroller;
 
 import com.mh.jishi.annotation.ApiDesc;
 import com.mh.jishi.service.CaptchaCodeManager;

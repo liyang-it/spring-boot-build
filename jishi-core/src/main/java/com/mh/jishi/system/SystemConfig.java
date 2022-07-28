@@ -20,4 +20,19 @@ public class SystemConfig {
      */
     public final static String DefaultAvatart = "System.DefaultAvatart";
 
+    /**
+     * 对象存储存储模式
+     */
+    public final static String StorageActive = "Storage.active";
+
+    /**
+     * 本地对象存储文件路径
+     */
+    public final static String StorageLocalStoragePath = "Storage.local.storagePath";
+
+    /**
+     * 本地对象存储文件访问url
+     */
+    public final static String StoragelocalAddress = "Storage.local.address";
+
 }

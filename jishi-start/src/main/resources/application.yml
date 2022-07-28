@@ -13,13 +13,13 @@ spring:
   resources:
     add-mappings: false
 server:
-  port: 8080
+  port: 9526
   compression:
     enabled: true
     min-response-size: 2048
     mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
   servlet:
-    context-path: /jishi
+    context-path: /pms
       # 使用  undertow 替代 tomcat
   undertow:
     accesslog:

@@ -6,6 +6,7 @@ import com.mh.jishi.constants.RedisKeyPrefix;
 import com.mh.jishi.entity.TSystem;
 import com.mh.jishi.mapper.TSystemMapper;
 import com.mh.jishi.util.RedisUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,10 @@ public class TSystemService extends ServiceImpl<TSystemMapper, TSystem> {
         String redisKey = RedisKeyPrefix.SystemConfig + key;
         if(!redisUtil.hasKey(redisKey)){
             value = this.baseMapper.getKeyValue(key);
-            redisUtil.set(redisKey, value);
+            if(StringUtils.isNotBlank(value)){
+                redisUtil.set(redisKey, value);
+            }
+
         }else{
             try {
                 value = redisUtil.get(redisKey).toString();

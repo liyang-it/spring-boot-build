@@ -83,7 +83,7 @@ public class ResponseUtil<T> {
     }
 
     public static ResponseUtil ok() {
-        return new ResponseUtil(0, "請求成功", null);
+        return new ResponseUtil(0, "请求成功", null);
     }
     public static ResponseUtil okUpd() {
         return new ResponseUtil(0, "修改成功", null);
@@ -96,9 +96,11 @@ public class ResponseUtil<T> {
     }
 
     public static ResponseUtil ok(Object data) {
-        return new ResponseUtil(0, "請求成功", data);
+        return new ResponseUtil(0, "请求成功", data);
     }
-
+    public static ResponseUtil updateFailed() {
+        return fail(504, "数据已被更新，请刷新重试", null);
+    }
 
     /**
      * 业务状态
@@ -113,7 +115,7 @@ public class ResponseUtil<T> {
         return fail(501, msg, null);
     }
     public static ResponseUtil fail() {
-        return new ResponseUtil(-1, "請求失敗", null);
+        return new ResponseUtil(-1, "请求失败", null);
     }
 
     public static ResponseUtil fail(int errno, String errmsg) {
@@ -129,32 +131,19 @@ public class ResponseUtil<T> {
     }
 
     public static ResponseUtil badArgument() {
-        return fail(401, "參數不對", null);
-    }
-    public static ResponseUtil notFound(){
-        return fail(404, "數據不存在!", null);
+        return fail(401, "参数不对", null);
     }
     public static ResponseUtil badArgumentValue() {
-        return fail(402, "參數值不對", null);
+        return fail(402, "参数值不对", null);
     }
 
     public static ResponseUtil unlogin() {
-        return fail(601, "請登錄", null);
+        return fail(601, "请登录", null);
     }
 
     public static ResponseUtil serious() {
-        return fail(502, "系統內部異常", null);
+        return fail(502, "系统内部异常", null);
     }
-
-
-    public static ResponseUtil unsupport() {
-        return fail(503, "業務不支持", null);
-    }
-
-    public static ResponseUtil updatedDateExpired() {
-        return fail(504, "更新數據已經失效", null);
-    }
-
     public static ResponseUtil updatedDataFailed() {
         return fail(505, "更新數據失敗", null);
     }

@@ -1,26 +1,31 @@
 package com.mh.jishi.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.time.LocalDateTime;
+import lombok.Data;
 
 /**
  * 对象存储表
  */
 @Data
 @TableName(value = "t_storage")
-public class TStorage {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class TStorage implements Serializable {
 
+    private final static long serialVersionUID = 1L;
     @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
 
     /**
      * 文件唯一值
      */
-    private String key;
+    private String fileKey;
 
     /**
      * 文件名称

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 本地mysql
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50649
+ Source Server Version : 50719
  Source Host           : localhost:3306
  Source Schema         : jishi
 
  Target Server Type    : MySQL
- Target Server Version : 50649
+ Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 28/12/2021 17:48:12
+ Date: 28/07/2022 17:40:13
 */
 
 SET NAMES utf8mb4;
@@ -57,14 +57,97 @@ CREATE TABLE `t_admin`  (
   `add_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '逻辑删除',
+  `is_super_admin` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1管理员 0 不是',
   `role_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '角色数组',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '管理员表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_admin
 -- ----------------------------
-INSERT INTO `t_admin` VALUES (1, 'admin123', '123456', '192.168.110.203', '2021-12-28 17:36:26', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2018-02-01 00:00:00', '2021-12-28 17:36:26', 0, '[1]');
+INSERT INTO `t_admin` VALUES (1, 'admin123', '123456', '192.168.1.35', '2022-07-28 17:38:13', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2018-02-01 00:00:00', '2022-07-28 17:38:13', 0, 1, '[1]');
+INSERT INTO `t_admin` VALUES (20, 'test9', '123456', '', NULL, 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2022-07-28 17:18:46', NULL, 0, 0, '[1]');
+INSERT INTO `t_admin` VALUES (21, 'test19', '123456', '', NULL, 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2022-07-28 17:19:02', NULL, 0, 0, '[1]');
+INSERT INTO `t_admin` VALUES (22, 'test219', '123456', '', NULL, 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif', '2022-07-28 17:19:07', NULL, 0, 1, '[1]');
+
+-- ----------------------------
+-- Table structure for t_admin_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `t_admin_menu`;
+CREATE TABLE `t_admin_menu`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_id` int(11) NOT NULL COMMENT '管理员id',
+  `menu_id` int(11) NOT NULL COMMENT '菜单id, 0 表示拥有全部菜单',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `admin_index`(`admin_id`, `menu_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 145 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '管理员菜单权限表' ROW_FORMAT = COMPACT;
+
+-- ----------------------------
+-- Records of t_admin_menu
+-- ----------------------------
+INSERT INTO `t_admin_menu` VALUES (120, 1, 9);
+INSERT INTO `t_admin_menu` VALUES (121, 1, 11);
+INSERT INTO `t_admin_menu` VALUES (122, 1, 12);
+INSERT INTO `t_admin_menu` VALUES (133, 19, 9);
+INSERT INTO `t_admin_menu` VALUES (134, 19, 11);
+INSERT INTO `t_admin_menu` VALUES (135, 19, 12);
+INSERT INTO `t_admin_menu` VALUES (136, 20, 9);
+INSERT INTO `t_admin_menu` VALUES (137, 20, 11);
+INSERT INTO `t_admin_menu` VALUES (138, 20, 12);
+INSERT INTO `t_admin_menu` VALUES (139, 21, 9);
+INSERT INTO `t_admin_menu` VALUES (140, 21, 11);
+INSERT INTO `t_admin_menu` VALUES (141, 21, 12);
+INSERT INTO `t_admin_menu` VALUES (142, 22, 9);
+INSERT INTO `t_admin_menu` VALUES (143, 22, 11);
+INSERT INTO `t_admin_menu` VALUES (144, 22, 12);
+INSERT INTO `t_admin_menu` VALUES (17, 75, 1);
+INSERT INTO `t_admin_menu` VALUES (18, 75, 2);
+INSERT INTO `t_admin_menu` VALUES (19, 75, 3);
+INSERT INTO `t_admin_menu` VALUES (20, 75, 8);
+INSERT INTO `t_admin_menu` VALUES (21, 75, 9);
+INSERT INTO `t_admin_menu` VALUES (22, 75, 11);
+INSERT INTO `t_admin_menu` VALUES (23, 75, 12);
+INSERT INTO `t_admin_menu` VALUES (49, 76, 12);
+INSERT INTO `t_admin_menu` VALUES (37, 77, 0);
+INSERT INTO `t_admin_menu` VALUES (38, 78, 1);
+INSERT INTO `t_admin_menu` VALUES (39, 78, 2);
+INSERT INTO `t_admin_menu` VALUES (40, 78, 3);
+INSERT INTO `t_admin_menu` VALUES (41, 78, 8);
+INSERT INTO `t_admin_menu` VALUES (53, 79, 1);
+INSERT INTO `t_admin_menu` VALUES (54, 79, 2);
+INSERT INTO `t_admin_menu` VALUES (55, 79, 3);
+INSERT INTO `t_admin_menu` VALUES (56, 79, 8);
+INSERT INTO `t_admin_menu` VALUES (57, 79, 9);
+INSERT INTO `t_admin_menu` VALUES (58, 79, 11);
+INSERT INTO `t_admin_menu` VALUES (59, 79, 12);
+INSERT INTO `t_admin_menu` VALUES (60, 80, 9);
+INSERT INTO `t_admin_menu` VALUES (61, 80, 11);
+INSERT INTO `t_admin_menu` VALUES (62, 80, 12);
+INSERT INTO `t_admin_menu` VALUES (63, 81, 2);
+INSERT INTO `t_admin_menu` VALUES (64, 82, 1);
+INSERT INTO `t_admin_menu` VALUES (65, 82, 2);
+INSERT INTO `t_admin_menu` VALUES (66, 82, 3);
+INSERT INTO `t_admin_menu` VALUES (68, 82, 4);
+INSERT INTO `t_admin_menu` VALUES (69, 82, 5);
+INSERT INTO `t_admin_menu` VALUES (67, 82, 8);
+INSERT INTO `t_admin_menu` VALUES (70, 82, 9);
+INSERT INTO `t_admin_menu` VALUES (71, 82, 11);
+INSERT INTO `t_admin_menu` VALUES (72, 82, 12);
+INSERT INTO `t_admin_menu` VALUES (86, 83, 4);
+INSERT INTO `t_admin_menu` VALUES (87, 83, 5);
+INSERT INTO `t_admin_menu` VALUES (88, 83, 9);
+INSERT INTO `t_admin_menu` VALUES (89, 83, 11);
+INSERT INTO `t_admin_menu` VALUES (90, 83, 12);
+INSERT INTO `t_admin_menu` VALUES (123, 84, 1);
+INSERT INTO `t_admin_menu` VALUES (124, 84, 2);
+INSERT INTO `t_admin_menu` VALUES (125, 84, 3);
+INSERT INTO `t_admin_menu` VALUES (127, 84, 4);
+INSERT INTO `t_admin_menu` VALUES (128, 84, 5);
+INSERT INTO `t_admin_menu` VALUES (126, 84, 8);
+INSERT INTO `t_admin_menu` VALUES (129, 84, 9);
+INSERT INTO `t_admin_menu` VALUES (130, 84, 11);
+INSERT INTO `t_admin_menu` VALUES (131, 84, 12);
+INSERT INTO `t_admin_menu` VALUES (132, 84, 13);
 
 -- ----------------------------
 -- Table structure for t_collect
@@ -5219,11 +5302,16 @@ CREATE TABLE `t_page_content`  (
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `status` tinyint(5) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_page_content
 -- ----------------------------
+INSERT INTO `t_page_content` VALUES (6, '預售協議', 'ysxy', '-', 1);
+INSERT INTO `t_page_content` VALUES (7, '抽獎玩法規則', 'cjwfgz', '-', 1);
+INSERT INTO `t_page_content` VALUES (8, '用戶協議', 'yhxy', '-', 1);
+INSERT INTO `t_page_content` VALUES (9, '關於我們', 'gywm', '-', 1);
+INSERT INTO `t_page_content` VALUES (10, '隱私政策', 'yszc', '-', 1);
 
 -- ----------------------------
 -- Table structure for t_permission
@@ -8697,22 +8785,24 @@ INSERT INTO `t_role_menu` VALUES (2, 2, '[\"lukcyDrawManagement\",\"series\",\"l
 DROP TABLE IF EXISTS `t_storage`;
 CREATE TABLE `t_storage`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` varchar(63) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件的唯一索引',
+  `file_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件的唯一索引',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件名',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件类型',
+  `type` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件类型',
   `size` int(11) NOT NULL COMMENT '文件大小',
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件访问链接',
   `add_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '逻辑删除',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `key`(`key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件存储表' ROW_FORMAT = COMPACT;
+  INDEX `key`(`file_key`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '文件存储表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_storage
 -- ----------------------------
 INSERT INTO `t_storage` VALUES (1, '39lnzh7mzaxubfj2t1ie.jpg', 'defaultHead2.0058acda.jpg', 'image/jpeg', 19772, 'http://localhost:8080/wx/storage/fetch/39lnzh7mzaxubfj2t1ie.jpg', '2021-12-02 19:19:41', '2021-12-02 19:19:41', 0);
+INSERT INTO `t_storage` VALUES (2, '3nq3qkfw9mp2dsjihoi7.xlsx', '凯韵通讯录2022.3.28.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 28666, 'http://localhost:6060/pmsApi/admin/storage/outLocalFile?key=3nq3qkfw9mp2dsjihoi7.xlsx', '2022-07-28 17:39:11', NULL, 0);
+INSERT INTO `t_storage` VALUES (3, 'h42c2674e0anjat24rxl.docx', '中国太平洋财产保险股份有限公司神行车保机动车损失保险(IACJQL0001)条款.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 53541, 'http://localhost:6060/pmsApi/admin/storage/outLocalFile?key=h42c2674e0anjat24rxl.docx', '2022-07-28 17:39:11', NULL, 0);
 
 -- ----------------------------
 -- Table structure for t_system
@@ -8725,46 +8815,55 @@ CREATE TABLE `t_system`  (
   `add_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '逻辑删除',
-  `desc_` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置描述',
+  `doc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 74 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统配置表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_system
 -- ----------------------------
-INSERT INTO `t_system` VALUES (2, 'litemall_wx_index_new', '6', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (3, 'litemall_mall_latitude', '31.201900', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (5, 'litemall_wx_share', 'false', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (6, 'litemall_express_freight_min', '88', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (7, 'litemall_mall_name', 'litemall', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (8, 'litemall_express_freight_value', '8', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (9, 'litemall_mall_qq', '705144434', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (10, 'litemall_wx_index_hot', '6', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (11, 'litemall_order_comment', '7', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (12, 'litemall_wx_catlog_goods', '4', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (13, 'litemall_mall_longitude', '121.587839', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (14, 'litemall_mall_phone', '021-xxxx-xxxx', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (15, 'litemall_wx_catlog_list', '4', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (16, 'litemall_mall_address', '上海', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (17, 'litemall_wx_index_brand', '4', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (18, 'litemall_wx_index_topic', '4', '2019-12-08 19:11:18', '2019-12-08 19:11:18', 0, NULL);
-INSERT INTO `t_system` VALUES (54, 'core_register_give_point', '1000', '2021-11-09 15:14:01', '2021-11-09 15:17:06', 0, '新用户注册赠送点券数量');
-INSERT INTO `t_system` VALUES (56, 'core__order_unpaid', '30', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '订单超时未支付,系统自动关闭订单(时间单位:分钟)');
-INSERT INTO `t_system` VALUES (57, 'core_order_audit_refund', '48', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '已付款申请退款,超时未确认退款,系统自动退款(时间单位:小时)');
-INSERT INTO `t_system` VALUES (59, 'core_order_audit_s_refund', '5', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '已发货申请仅退款,平台X天时间不处理，系统自动退款(时间单位:天)');
-INSERT INTO `t_system` VALUES (60, 'core_default_avatar', 'https://res.easydoc.net/static/img/defaultHead2.0058acda.jpg', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '用户注册默认头像');
-INSERT INTO `t_system` VALUES (61, 'core__order_unconfirm', '7', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '发货用户超时未确认收货,系统自动收货(时间单位:天)');
-INSERT INTO `t_system` VALUES (62, 'core_order_not_ship', '48', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '已付款,平台未发货/用户未上门取件,系统自动退款(时间单位:小时)');
-INSERT INTO `t_system` VALUES (63, 'core_meet_the_amount_give_vip', '10', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '一次性消费满多少赠送VIP');
-INSERT INTO `t_system` VALUES (64, 'core_order_comment', '7', '2021-11-09 15:26:27', '2021-11-09 15:26:27', 0, '收货完成,关闭商品评论时间(时间单位:天)');
-INSERT INTO `t_system` VALUES (65, 'core_order_confirm_end', '2', '2021-11-09 15:26:27', '2021-11-09 15:26:27', 0, '确认收货,系统自动关闭订单(时间单位: 天)');
-INSERT INTO `t_system` VALUES (66, 'core_order_refund_not_ship', '7', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '“退货退款”，给买家7天时间完成退货并填写退货信息；7天内没有完成退货信息的则关闭退款流程；买家在7天内点击退货，且平台确认收货的，平台退款给买家(时间单位:天)');
-INSERT INTO `t_system` VALUES (68, 'core_order_booking', '7', '2021-11-09 15:14:01', '2021-11-09 15:14:01', 0, '预售商品指定时间内未支付尾款,系统自动关闭订单(时间单位:天)');
-INSERT INTO `t_system` VALUES (69, 'core_integal_scale', '1', '2021-11-12 14:35:50', '2021-11-12 14:35:50', 0, '消费积分比例');
-INSERT INTO `t_system` VALUES (70, 'core_order_unpaid', '30', '2021-11-25 19:29:19', '2021-11-25 19:29:19', 0, '订单超时未支付,系统自动关闭订单(时间单位:分钟)');
-INSERT INTO `t_system` VALUES (71, 'core_order_unconfirm', '7', '2021-11-25 19:29:19', '2021-11-25 19:29:19', 0, '发货用户超时未确认收货,系统自动收货(时间单位:天)');
-INSERT INTO `t_system` VALUES (72, 'lucky_operation_seconds', '120', '2021-11-25 19:29:19', '2021-11-25 19:29:19', 0, '抽奖操作时间(单位秒)');
-INSERT INTO `t_system` VALUES (73, 'cust_service_url', 'www.baidu.com', '2021-12-03 13:52:35', '2021-12-03 13:52:35', 0, '客服链接url');
+INSERT INTO `t_system` VALUES (74, 'Storage.active', 'local', '2022-06-14 09:48:04', NULL, 0, '用户注册默认头像');
+INSERT INTO `t_system` VALUES (75, 'Storage.local.storagePath', 'files/', '2022-06-14 09:57:44', NULL, 0, NULL);
+INSERT INTO `t_system` VALUES (76, 'Storage.local.address', 'http://localhost:6060/pmsApi/admin/storage/outLocalFile?key=', '2022-06-14 09:58:08', NULL, 0, NULL);
+INSERT INTO `t_system` VALUES (77, 'System.DefaultAvatart', 'https://yanxuan.nosdn.127.net/80841d741d7fa3073e0ae27bf487339f.jpg?imageView&quality=90', '2022-07-28 17:35:36', NULL, 0, '用户注册默认头像');
+
+-- ----------------------------
+-- Table structure for t_system_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `t_system_menu`;
+CREATE TABLE `t_system_menu`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` int(11) NOT NULL COMMENT '父级菜单id， 0表示没有上级',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单名称',
+  `path` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '路径',
+  `component` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '组件，一级菜单固定 Layout',
+  `redirect` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '重定向访问路径',
+  `always_show` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否为菜单目录，默认0',
+  `meta` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题对象{title: ‘’, icon: ‘’} json字符串格式存储',
+  `version` int(11) NOT NULL DEFAULT 1 COMMENT '数据版本，每次更新都+1，用于乐观锁更新数据',
+  `hidden` tinyint(1) NULL DEFAULT 0 COMMENT '是否隐藏， true隐藏',
+  `add_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL COMMENT '1删除， 0 正常',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `parent_index`(`parent`, `deleted`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统管理 - 菜单管理信息表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of t_system_menu
+-- ----------------------------
+INSERT INTO `t_system_menu` VALUES (1, 0, 'SN管理444', '/sn-manage', 'Layout', '/sn-manage', 1, '{\"icon\":\"dashboard\",\"title\":\"SN管理\"}', 1, 0, '2022-04-07 09:12:18', '2022-04-11 17:54:40', 0);
+INSERT INTO `t_system_menu` VALUES (2, 1, 'SN管理-SN字典管理', '/dict/index', 'use/sn-manage/dict/index', '', 0, '{ title: \'字典管理\', icon: \'edit\' }', 1, 0, '2022-04-07 09:13:03', NULL, 0);
+INSERT INTO `t_system_menu` VALUES (3, 1, 'SN管理-序列号生成', '/generate/index', 'use/sn-manage/generate/index', '', 0, '{\"icon\":\"guide\",\"title\":\"序列号生成\"}', 3, 0, '2022-04-07 09:14:39', '2022-06-02 17:09:03', 0);
+INSERT INTO `t_system_menu` VALUES (4, 0, '管理员管理', '/admin-manage', 'Layout', '/admin-manage', 1, '{title: \'管理员管理\',icon: \'user\'}', 1, 0, '2022-04-07 09:16:32', NULL, 0);
+INSERT INTO `t_system_menu` VALUES (5, 4, '管理员列表', '/pmsApi/admin/index', 'use/admin/index', NULL, 0, '{ title: \'管理员列表\', icon: \'edit\' }', 1, 0, '2022-04-07 09:17:02', NULL, 0);
+INSERT INTO `t_system_menu` VALUES (7, 0, '测试一级菜单', 'test', 'Layout', NULL, 1, '{\"icon\":\"user\",\"title\":\"测试标题\"}', 1, 0, '2022-04-07 14:45:12', '2022-04-07 16:32:35', 1);
+INSERT INTO `t_system_menu` VALUES (8, 1, 'SN管理-序列号列表', '/generate/record', 'use/sn-manage/generate/record', NULL, 0, '{\"icon\":\"user\",\"title\":\"序列号列表\"}', 3, 0, '2022-04-07 14:45:45', '2022-06-02 17:09:09', 0);
+INSERT INTO `t_system_menu` VALUES (9, 0, '系统管理', '/system', 'Layout', NULL, 1, '{\"icon\":\"tree\",\"title\":\"系统管理\"}', 1, 0, '2022-04-07 15:31:47', NULL, 0);
+INSERT INTO `t_system_menu` VALUES (10, 9, '菜单管理', '/system/menu/index', 'use/system-manage/menu/index', NULL, 0, '{\"icon\":\"excel\",\"title\":\"菜单管理\"}', 1, 0, '2022-04-07 15:51:58', '2022-04-07 16:03:19', 1);
+INSERT INTO `t_system_menu` VALUES (11, 9, '菜单管理', '/system/menu/index', 'use/system-manage/menu/index', NULL, 0, '{\"icon\":\"tree-table\",\"title\":\"菜单管理\"}', 1, 0, '2022-04-07 16:33:22', NULL, 0);
+INSERT INTO `t_system_menu` VALUES (12, 9, '操作人员管理', '/system/operator/index', 'use/system-manage/operator/index', NULL, 0, '{\"icon\":\"list\",\"title\":\"操作人员管理\"}', 1, 0, '2022-04-07 16:33:45', NULL, 0);
+INSERT INTO `t_system_menu` VALUES (13, 12, '操作人员管理', '/system/operator/index', 'use/system-manage/operator/index', NULL, 0, '{\"icon\":\"list\",\"title\":\"操作人员管理\"}', 1, 0, '2022-04-07 16:33:45', NULL, 0);
 
 -- ----------------------------
 -- Table structure for t_user
