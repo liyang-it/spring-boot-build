@@ -9,7 +9,6 @@
 
 
 ### 🛠️整合的功能
-* 独立socket程序， 独立socket单独下载(去除，单独一个仓库)
 * 后台管理shiro权限控制
 * 移动端api jwt+token
 * 腾讯云短信模版
@@ -27,18 +26,20 @@
 * 待整合RabbitMQ。。。
 
 ### 🛠️文件结构说明
-| 模块             | 介绍                 |
-|----------------|--------------------|
-| doc            | 项目文件 目录            |
-| doc.data       | 项目数据               |
-| doc.desc       | 项目说明文件             |
-| doc.sql        | sql                |
-| jishi-admin    | 后台管理接口、服务          |
-| jishi-api    | 移动端api          |
-| jishi-core  | 核心公共组件             |
-| jishi-db      | 数据库、服务层、实体类、mapper |
-| jishi-start    | 程序启动相关             |
-| logs   | 主程序日志目录            |
+| 模块              | 介绍                 |
+|-----------------|--------------------|
+| doc             | 项目文件 目录            |
+| doc.data        | 项目数据               |
+| doc.desc        | 项目说明文件             |
+| doc.sql         | sql                |
+| jishi-admin     | 后台管理接口、服务          |
+| jishi-api       | 移动端api             |
+| jishi-core      | 核心公共组件             |
+| jishi-db        | 数据库、服务层、实体类、mapper |
+| jishi-start     | 程序启动相关             |
+| logs            | 主程序日志目录            |
+| files           | 本地对象存储存储文件夹        |
+| jishi-vue-admin | vue管理后台            |
 
 ### 🛠️资料信息
 
