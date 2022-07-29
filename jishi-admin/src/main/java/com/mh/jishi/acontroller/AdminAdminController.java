@@ -49,8 +49,8 @@ public class AdminAdminController {
     @RequiresPermissions("admin:admin:list")
     @RequiresPermissionsDesc(menu = {"系统管理", "后台管理员管理"}, button = "查询")
     @GetMapping("/list")
-    public Object list(String username, @RequestParam(defaultValue = "-1") Integer deleted, @RequestParam(defaultValue = "-1") Integer isSuper, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer limit) {
-        IPage<TAdmin> adminList = adminService.querySelective(username, deleted, isSuper, page, limit);
+    public Object list(String username, @RequestParam(defaultValue = "-1") Integer status, @RequestParam(defaultValue = "-1") Integer isSuper, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer limit) {
+        IPage<TAdmin> adminList = adminService.querySelective(username, status, isSuper, page, limit);
 
         return ResponseUtil.ok(adminList);
     }
@@ -64,29 +64,36 @@ public class AdminAdminController {
         if (adminList != 0) {
             throw new ServiceException("账户已存在");
         }
-        // 新逻辑
         // 保存 管理员
         String avatar = "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif";
         TAdmin admin = new TAdmin();
-        // 账户类型
         admin.setAvatar(avatar);
         admin.setUsername(dto.getUsername());
         admin.setPassword(dto.getPassword());
         admin.setRoleIds(new Integer[]{1});
         admin.setAddTime(LocalDateTime.now());
+        admin.setStatus(dto.getStatus());
         admin.setDeleted(false);
         admin.setIsSuperAdmin(dto.getIsSuperAdmin());
         adminService.save(admin);
         // 添加管理员菜单
-        LinkedList<TAdminMenu> linkedList = new LinkedList<>();
-        for (int i = 0; i < dto.getMenu().length; i++) {
-            TAdminMenu menu = new TAdminMenu();
-            menu.setAdminId(admin.getId());
-            menu.setMenuId(dto.getMenu()[i]);
-            linkedList.add(menu);
+
+        if(!dto.getIsSuperAdmin()){
+            if(dto.getMenu().length != 0){
+                LinkedList<TAdminMenu> linkedList = new LinkedList<>();
+                for (int i = 0; i < dto.getMenu().length; i++) {
+                    TAdminMenu menu = new TAdminMenu();
+                    menu.setAdminId(admin.getId());
+                    menu.setMenuId(dto.getMenu()[i]);
+                    linkedList.add(menu);
+                }
+                // 保存管理员菜单
+                menuService.saveBatch(linkedList);
+            }else{
+                throw new ServiceException("权限不能为空");
+            }
         }
-        // 保存管理员菜单
-        menuService.saveBatch(linkedList);
+
         return ResponseUtil.ok();
     }
 
@@ -115,25 +122,32 @@ public class AdminAdminController {
                     throw new ServiceException("账户已存在");
                 }
             }
-            // 账户类型
+            admin.setStatus(dto.getStatus());
             admin.setIsSuperAdmin(dto.getIsSuperAdmin());
             admin.setUsername(dto.getUsername());
             adminService.updateByIdQ(admin);
-            // 删除管理员菜单
-            menuService.remove(new QueryWrapper<TAdminMenu>().eq("admin_id", dto.getId()));
-            // 添加管理员菜单
-            LinkedList<TAdminMenu> linkedList = new LinkedList<>();
-            for (int i = 0; i < dto.getMenu().length; i++) {
-                TAdminMenu menu = new TAdminMenu();
-                menu.setAdminId(admin.getId());
-                menu.setMenuId(dto.getMenu()[i]);
-                linkedList.add(menu);
+            if(!dto.getIsSuperAdmin()){
+                if(dto.getMenu().length != 0){
+                    // 删除管理员菜单
+                    menuService.remove(new QueryWrapper<TAdminMenu>().eq("admin_id", dto.getId()));
+                    // 添加管理员菜单
+                    LinkedList<TAdminMenu> linkedList = new LinkedList<>();
+                    for (int i = 0; i < dto.getMenu().length; i++) {
+                        TAdminMenu menu = new TAdminMenu();
+                        menu.setAdminId(admin.getId());
+                        menu.setMenuId(dto.getMenu()[i]);
+                        linkedList.add(menu);
+                    }
+                    // 保存管理员菜单
+                    menuService.saveBatch(linkedList);
+                    // 删除缓存
+                    redisUtil.hdel(RedisKeyPrefix.SyStemAdminMenu, admin.getId().toString());
+                    redisUtil.hdel(RedisKeyPrefix.SystemAdminMenuIds, admin.getId().toString());
+                }else{
+                    throw new ServiceException("权限不能为空");
+                }
             }
-            // 保存管理员菜单
-            menuService.saveBatch(linkedList);
-            // 删除缓存
-            redisUtil.hdel(RedisKeyPrefix.SyStemAdminMenu, admin.getId().toString());
-            redisUtil.hdel(RedisKeyPrefix.SystemAdminMenuIds, admin.getId().toString());
+
             return ResponseUtil.ok();
     }
 
@@ -145,14 +159,12 @@ public class AdminAdminController {
         if (anotherAdminId == null) {
             return ResponseUtil.badArgument();
         }
-
         // 管理员不能删除自身账号
         Subject currentUser = SecurityUtils.getSubject();
         TAdmin currentAdmin = (TAdmin) currentUser.getPrincipal();
         if (currentAdmin.getId().equals(anotherAdminId)) {
             return ResponseUtil.fail(501, "不能刪除自己賬號");
         }
-
         adminService.deleteById(anotherAdminId);
         return ResponseUtil.ok();
     }

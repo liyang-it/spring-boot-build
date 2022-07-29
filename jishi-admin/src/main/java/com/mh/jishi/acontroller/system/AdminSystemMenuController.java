@@ -2,10 +2,13 @@ package com.mh.jishi.acontroller.system;
 
 import com.mh.jishi.acontroller.system.dto.AddOrUpdMenuDTO;
 import com.mh.jishi.annotation.RequiresPermissionsDesc;
+import com.mh.jishi.entity.TAdmin;
+import com.mh.jishi.service.TAdminService;
 import com.mh.jishi.service.system.AdminSystemMenuService;
 import com.mh.jishi.util.ResponseUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,10 +26,12 @@ import javax.validation.Valid;
 public class AdminSystemMenuController {
 
     private final AdminSystemMenuService service;
+    private final TAdminService adminService;
 
     @Autowired
-    public AdminSystemMenuController(AdminSystemMenuService service){
+    public AdminSystemMenuController(AdminSystemMenuService service, TAdminService adminService){
         this.service = service;
+        this.adminService = adminService;
     }
 
     @RequiresPermissions("admin:system-menu")
@@ -39,8 +44,10 @@ public class AdminSystemMenuController {
     @RequiresPermissions("admin:system-menu")
     @RequiresPermissionsDesc(menu = {"系统管理", "菜单管理"}, button = "根据管理员id查询")
     @GetMapping("/queryAllById")
-    public ResponseUtil queryAllById(Integer adminId){
-        return ResponseUtil.ok(service.queryMenuByAdminId(adminId));
+    public ResponseUtil queryAllById(@RequestParam Integer adminId){
+        TAdmin admin = adminService.getById(adminId);
+        Assert.notNull(admin, "管理员不存在");
+        return ResponseUtil.ok(service.queryMenuByAdmin(admin));
     }
 
     @RequiresPermissions("admin:system-menu")

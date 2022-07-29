@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.mh.jishi.acontroller.system.dto.AddOrUpdMenuDTO;
 import com.mh.jishi.config.ServiceException;
 import com.mh.jishi.constants.RedisKeyPrefix;
+import com.mh.jishi.entity.TAdmin;
 import com.mh.jishi.entity.TSystemMenu;
 import com.mh.jishi.exception.ConcurrentUpdateException;
 import com.mh.jishi.service.system.impl.AdminMenuServiceImpl;
@@ -50,21 +51,20 @@ public class AdminSystemMenuService {
     /**
      * <h3>返回某个管理员菜单数据列表</h3>
      *
-     * @param adminId 管理员id
+     * @param admin 管理员对象
      * @return List<TSystemMenu>
      */
-    public List<TSystemMenu> queryMenuByAdminId(Integer adminId) {
-        if (redisUtil.hHasKey(RedisKeyPrefix.SyStemAdminMenu, adminId.toString())) {
-            return (List<TSystemMenu>) redisUtil.hget(RedisKeyPrefix.SyStemAdminMenu, adminId.toString());
+    public List<TSystemMenu> queryMenuByAdmin(TAdmin admin) {
+        String adminIdStr = admin.getId().toString();
+        if (redisUtil.hHasKey(RedisKeyPrefix.SyStemAdminMenu, adminIdStr)) {
+            return (List<TSystemMenu>) redisUtil.hget(RedisKeyPrefix.SyStemAdminMenu, adminIdStr);
         }
-        // 如果是超级管理员 直接查询全部权限
-        int isSuper = menuService.getBaseMapper().checkIsSuperAdmin(adminId);
         List<TSystemMenu> list = null;
-        if (isSuper > 0) {
+        if (admin.getIsSuperAdmin()) {
             list = queryAllByList();
         } else {
             // 元数据
-            List<TSystemMenu> metaList = service.getBaseMapper().queryMenuByAdminId(adminId);
+            List<TSystemMenu> metaList = service.getBaseMapper().queryMenuByAdminId(admin.getId());
             // 过滤出一级菜单
             list = metaList.stream().filter(item -> item.getParent().equals(0)).collect(Collectors.toList());
             // 遍历一级菜单，筛选出子级菜单
@@ -73,7 +73,7 @@ public class AdminSystemMenuService {
                 recursionByStream(parent, metaList, menu);
             }
         }
-        redisUtil.hset(RedisKeyPrefix.SyStemAdminMenu, adminId.toString(), list, SAVE_ALL_MENU_CACHE_SECOND);
+        redisUtil.hset(RedisKeyPrefix.SyStemAdminMenu, adminIdStr, list, SAVE_ALL_MENU_CACHE_SECOND);
         return list;
     }
 

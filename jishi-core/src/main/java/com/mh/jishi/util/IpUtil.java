@@ -2,9 +2,16 @@ package com.mh.jishi.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 
 /**
@@ -12,7 +19,7 @@ import java.net.UnknownHostException;
  */
 public class IpUtil {
 
-    private static final Log logger = LogFactory.getLog(IpUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(IpUtil.class);
 
     public static String getIpAddr(HttpServletRequest request) {
         String ipAddress;
@@ -32,7 +39,7 @@ public class IpUtil {
                     try {
                         inet = InetAddress.getLocalHost();
                     } catch (UnknownHostException e) {
-                        logger.error(e.getMessage(), e);
+                        log.error(e.getMessage(), e);
                     }
                     ipAddress = inet.getHostAddress();
                 }
@@ -49,5 +56,48 @@ public class IpUtil {
         }
 
         return ipAddress;
+    }
+
+    /**
+     * <h2>获取本机的外网ip地址</h2>
+     *
+     * @return
+     */
+    public static String getV4OrV6IP() {
+        String ip = null;
+        // 访问其他网站获取ip
+        // 测试网站 https://ipw.cn/
+        String test = "http://test.ipw.cn";
+        StringBuilder inputLine = new StringBuilder();
+        String read = "";
+        URL url = null;
+        HttpURLConnection urlConnection = null;
+        BufferedReader in = null;
+        try {
+            url = new URL(test);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+            while ((read = in.readLine()) != null) {
+                inputLine.append(read);
+            }
+            ip = inputLine.toString();
+
+        } catch (Exception e) {
+            log.error("获取网络IP地址异常，这是具体原因: ", e);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        if (ip == null) {
+            // 没有获取到ip 给默认ip
+            ip = "127.0.0.1";
+            log.info("获取网络IP地址异常, 赋值默认ip: 【{}】", ip);
+        }
+        return ip;
     }
 }

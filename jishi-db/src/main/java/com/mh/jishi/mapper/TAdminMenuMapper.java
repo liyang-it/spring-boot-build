@@ -17,12 +17,6 @@ import com.mh.jishi.entity.TAdminMenu;
  * @since 2022-03-29
  */
 public interface TAdminMenuMapper extends BaseMapper<TAdminMenu> {
-    /**
-     * 验证管理员是否是超级管理员，使用 是否有全部菜单权限  0  验证
-     * @param adminId 管理员id
-     * @return 查询条数
-     */
-    int checkIsSuperAdmin(@Param("adminId") Integer adminId);
 
     @Select("SELECT menu_id FROM `t_admin_menu` where admin_id = #{adminId}")
     List<Integer> getAdminMenuIds(@Param("adminId") Integer adminId);

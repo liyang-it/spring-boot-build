@@ -74,17 +74,18 @@ public class AdminAuthorizingRealm extends AuthorizingRealm {
         if (StringUtils.isEmpty(password)) {
             throw new AccountException("密碼不能為空");
         }
-
-        List<TAdmin> adminList = adminMapper.selectList(new QueryWrapper<TAdmin>().eq("username", username));
-        Assert.state(adminList.size() < 2, "同一个用户名存在两个账户");
-        if (adminList.size() == 0) {
+        TAdmin admin = adminMapper.selectOne(new QueryWrapper<TAdmin>().eq("username", username).eq("deleted", 0));
+        if (null == admin) {
             throw new UnknownAccountException("找不到用戶（" + username + "）的账号信息");
         }
-        TAdmin admin = adminList.get(0);
 
         if (!password.equals(admin.getPassword())) {
-            throw new UnknownAccountException("密码错误");
+            throw new UnknownAccountException();
         }
+        if (admin.getStatus()) {
+            throw new LockedAccountException();
+        }
+
         return new SimpleAuthenticationInfo(admin, password, getName());
     }
 }

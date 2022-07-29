@@ -21,8 +21,6 @@ public class AddOrUpdAdminDTO {
     private String username;
     @NotBlank(message = "密码不能为空")
     private String password;
-
-    @NotEmpty(message = "权限不能为空")
     // menu_id数组
     private Integer[] menu;
 
@@ -31,6 +29,8 @@ public class AddOrUpdAdminDTO {
      */
     @NotNull(message = "请选择是否为超级管理员")
     private Boolean isSuperAdmin;
+
+    private Boolean status;
 
 
 }

@@ -115,7 +115,7 @@ public class AdminAuthController {
         JSONObject jsonObject = JSONUtil.parseObj(json);
         String passwod = jsonObject.getStr("password");
         if (org.apache.commons.lang3.StringUtils.isBlank(passwod)) {
-            return ResponseUtil.fail(401, "請輸入密碼");
+            return ResponseUtil.fail(401, "请输入密码");
         }
         Subject currentUser = SecurityUtils.getSubject();
         TAdmin admin = (TAdmin) currentUser.getPrincipal();
@@ -139,7 +139,7 @@ public class AdminAuthController {
             return ResponseUtil.badArgument();
         }
         if (StringUtils.isEmpty(code)) {
-            return ResponseUtil.fail("驗證碼不能為空");
+            return ResponseUtil.fail("验证码不能为空");
         }
         Object kaptcha = redisUtil.get("kaptcha:".concat(IpUtil.getIpAddr(request)));
 
@@ -148,21 +148,21 @@ public class AdminAuthController {
             kaptcha = "431024";
         }
         if (Objects.requireNonNull(code).compareToIgnoreCase(kaptcha.toString()) != 0) {
-            return ResponseUtil.fail(401, "驗證碼錯誤", doKaptcha(request));
+            return ResponseUtil.fail(401, "验证码错误", doKaptcha(request));
         }
 
         Subject currentUser = SecurityUtils.getSubject();
         try {
             currentUser.login(new UsernamePasswordToken(username, password));
         } catch (UnknownAccountException uae) {
-            log.error("后台登录, 用戶賬號或密碼不正確");
-            return ResponseUtil.fail(501, "用戶賬號或密碼不正確", doKaptcha(request));
+            log.error("后台登录, 账户或密码错误; 登录信息：【{}】", body);
+            return ResponseUtil.fail(501, "账户或密码错误", doKaptcha(request));
         } catch (LockedAccountException lae) {
-            log.error("后台登录, 用戶賬號已鎖定不可用");
-            return ResponseUtil.fail(501, "用戶賬號已鎖定不可用");
+            log.error("后台登录, 账户已禁用; 登录信息：【{}】", body);
+            return ResponseUtil.fail(501, "账户已禁用");
 
         } catch (AuthenticationException ae) {
-            log.error("后台登录, 认证失败");
+            log.error("后台登录, 认证失败; 登录信息：【{}】", body);
             return ResponseUtil.fail(501, "認證失敗");
         }
 
@@ -211,7 +211,7 @@ public class AdminAuthController {
     @GetMapping("/info")
     public Object info() throws IOException, ExecutionException, InterruptedException {
         Subject currentUser = SecurityUtils.getSubject();
-        TAdmin admin = (TAdmin) currentUser.getPrincipal();
+        final TAdmin admin = (TAdmin) currentUser.getPrincipal();
 
         Map<String, Object> data = new HashMap<>();
         Future<Object> task1 = ThreadUtil.execAsync(new Callable<Object>() {
@@ -241,7 +241,7 @@ public class AdminAuthController {
             @Override
             public Object call() throws Exception {
                 // 查询管理员菜单具体内容
-                List<TSystemMenu> list = systemMenuService.queryMenuByAdminId(admin.getId());
+                List<TSystemMenu> list = systemMenuService.queryMenuByAdmin(admin);
                 data.put("menu", list);
                 return null;
             }

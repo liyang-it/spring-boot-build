@@ -66,7 +66,10 @@ public class TAdmin {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
-
+    /**
+     * 1 禁用 0 正常
+     */
+    private Boolean status;
     private Boolean deleted;
 
     /**

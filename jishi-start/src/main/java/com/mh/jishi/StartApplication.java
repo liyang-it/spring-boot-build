@@ -81,7 +81,7 @@ public class StartApplication {
 
 
         log.info("是否开启 Druid监控：【{}】", statViewServlet);
-        log.info("服务访问路径：【{}】", contextPath);
+        log.info("服务访问路径：【http://127.0.0.1:{}{}】", port, contextPath);
         log.info("服务访问端口：【{}】", port);
         log.info("服务启动时间：【{}】", LocalDateTime.now());
         log.info("=================  服务启动成功  =================");

@@ -1,6 +1,8 @@
 package com.mh.jishi.config;
 
+import com.mh.jishi.interceptor.CurrentLimitingInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -25,5 +27,11 @@ public class WebConfig extends WebMvcConfigurationSupport {
                 "classpath:/META-INF/resources/webjars/");
         // 加入 swagger-ui.html 映射 结束
         super.addResourceHandlers(registry);
+    }
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new CurrentLimitingInterceptor());
+        super.addInterceptors(registry);
     }
 }

@@ -71,23 +71,24 @@ public class TAdminService extends ServiceImpl<TAdminMapper, TAdmin> {
     }
 
     /**
-     * 分页级联生产厂家查询
+     * 分页查询
      *
      * @param username  账户用户名
-     * @param deleted   是否删除 -1 全部， 0 正常 1 删除或者禁用
+     * @param status   状态 -1 全部， 0 正常 1 禁用
      * @param isSuper   -1 全部，1 超级管理员，0 普通管理员
      * @param page      当前页
      * @param limit     显示条数
      * @return IPage<TAdmin> 分页对象数据
      */
-    public IPage<TAdmin> querySelective(String username, Integer deleted, Integer isSuper, Integer page, Integer limit) {
+    public IPage<TAdmin> querySelective(String username, Integer status, Integer isSuper, Integer page, Integer limit) {
 
 
         IPage<TAdmin> iPage = new Page<>(page, limit);
         QueryWrapper<TAdmin> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(username), "username", username);
-        queryWrapper.eq(!deleted.equals(-1), "deleted", username);
-        queryWrapper.eq(!isSuper.equals(-1), "is_super_admin", username);
+        queryWrapper.eq(!status.equals(-1), "status", 0);
+        queryWrapper.eq("deleted", 0);
+        queryWrapper.eq(!isSuper.equals(-1), "is_super_admin", isSuper);
         iPage = page(iPage, queryWrapper);
         for (TAdmin item : iPage.getRecords()) {
             List<Integer> menuIds = getAdminMenuIds(item.getId());
