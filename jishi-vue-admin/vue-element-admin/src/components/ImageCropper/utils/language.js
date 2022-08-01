@@ -1,12 +1,15 @@
+/**
+ * 多语言
+ */
 export default {
   zh: {
-    login_page:{
+    login_page: {
       validateUsername: '请输入用户名',
       validatePassword: '请输入密码',
-      validateCode: "请输入验证码"
+      validateCode: '请输入验证码'
     },
-    login_btn: "确认登录",
-    login: "登录 PMS Admin",
+    login_btn: '确认登录',
+    login: '幸运抽奖机',
     hint: '点击，或拖动图片至此处',
     loading: '正在上传……',
     noSupported: '浏览器不支持该功能，请使用IE10以上或其他现在浏览器！',
@@ -45,13 +48,13 @@ export default {
     }
   },
   en: {
-    login_page:{
+    login_page: {
       validateUsername: 'Please enter a user name',
       validatePassword: 'Please enter your password',
-      validateCode: "Please enter a verification code"
+      validateCode: 'Please enter a verification code'
     },
-    login_btn: "confirm",
-    login: "Login PMS Admin",
+    login_btn: 'confirm',
+    login: 'Login PMS Admin',
     hint: 'Click or drag the file here to upload',
     loading: 'Uploading…',
     noSupported: 'Browser is not supported, please use IE10+ or other browsers',

@@ -70,7 +70,7 @@
           <!-- @keyup.enter="handleLogin"
                   v-on:keyup.enter.native="handleLogin" -->
         </el-input>
-        <img :src="code" class="code_class" @click="getCodeUrl" />
+        <img :src="code" class="code_class" @click="getCodeUrl">
       </el-form-item>
 
       <el-button
@@ -78,7 +78,7 @@
         style="width: 100%; margin-bottom: 30px"
         type="primary"
         @click.native.prevent="handleLogin"
-        >{{ lang.login_btn }}
+      >{{ lang.login_btn }}
         <!-- @keyup.enter.native="handleLogin" -->
         <!-- @keyup.enter="handleLogin" -->
         <!-- v-on:keyup.enter.native="handleLogin" -->
@@ -107,124 +107,125 @@
     <el-dialog :visible.sync="showDialog" title="Or connect with">
       Can not be simulated on local, so please combine you own business
       simulation! ! !
-      <br />
-      <br />
-      <br />
+      <br>
+      <br>
+      <br>
       <social-sign />
     </el-dialog>
   </div>
 </template>
 
 <script>
-import request from "@/utils/request.js";
-import language from "@/components/ImageCropper/utils/language.js";
-import SocialSign from "./components/SocialSignin";
+import request from '@/utils/request.js'
+import language from '@/components/ImageCropper/utils/language.js'
+import SocialSign from './components/SocialSignin'
 
 export default {
-  name: "Login",
+  name: 'Login',
   components: {
-    SocialSign,
+    SocialSign
   },
   props: {
     // 语言类型
     langType: {
       type: String,
-      default: "zh",
-    },
+      default: 'zh'
+    }
   },
   data() {
-    const { langType } = this;
-    const lang = language[langType] ? language[langType] : language["en"];
+    // 多语言
+    const { langType } = this
+    const lang = language[langType] ? language[langType] : language['en']
     const validateUsername = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error(lang.login_page.validateUsername));
+        callback(new Error(lang.login_page.validateUsername))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error(lang.login_page.validatePassword));
+        callback(new Error(lang.login_page.validatePassword))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     const validateCode = (rule, value, callback) => {
       if (value.length === 0) {
-        callback(new Error(lang.login_page.validateCode));
+        callback(new Error(lang.login_page.validateCode))
       } else {
-        callback();
+        callback()
       }
-    };
+    }
     return {
       lang,
       loginForm: {
-        username: "",
-        password: "",
-        code: "",
+        username: '',
+        password: '',
+        code: ''
       },
       loginRules: {
         username: [
           {
             required: true,
-            trigger: "blur",
-            validator: validateUsername,
-          },
+            trigger: 'blur',
+            validator: validateUsername
+          }
         ],
         password: [
           {
             required: true,
-            trigger: "blur",
-            validator: validatePassword,
-          },
+            trigger: 'blur',
+            validator: validatePassword
+          }
         ],
         code: [
           {
             required: true,
-            trigger: "blur",
-            validator: validateCode,
-          },
-        ],
+            trigger: 'blur',
+            validator: validateCode
+          }
+        ]
       },
       demo: {
-        username: "admin123",
-        password: "123456",
+        username: 'admin123',
+        password: '123456'
       },
-      passwordType: "password",
+      passwordType: 'password',
       capsTooltip: false,
       loading: false,
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      code: "",
-    };
+      code: ''
+    }
   },
   watch: {
     $route: {
-      handler: function (route) {
-        const query = route.query;
+      handler: function(route) {
+        const query = route.query
         if (query) {
-          this.redirect = query.redirect;
-          this.otherQuery = this.getOtherQuery(query);
+          this.redirect = query.redirect
+          this.otherQuery = this.getOtherQuery(query)
         }
       },
-      immediate: true,
-    },
+      immediate: true
+    }
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
-    this.loginForm.username = this.demo.username;
-    this.loginForm.password = this.demo.password;
-    this.getCodeUrl();
+    this.loginForm.username = this.demo.username
+    this.loginForm.password = this.demo.password
+    this.getCodeUrl()
   },
 
   mounted() {
-    if (this.loginForm.username === "") {
-      this.$refs.username.focus();
-    } else if (this.loginForm.password === "") {
-      this.$refs.password.focus();
-    } else if (this.loginForm.code === "") {
-      this.$refs.code.focus();
+    if (this.loginForm.username === '') {
+      this.$refs.username.focus()
+    } else if (this.loginForm.password === '') {
+      this.$refs.password.focus()
+    } else if (this.loginForm.code === '') {
+      this.$refs.code.focus()
     }
   },
   destroyed() {},
@@ -232,56 +233,56 @@ export default {
     getCodeUrl() {
       // 请求获取 验证码
       // 请求验证码
-      this.loginForm.code = "";
-      request.get("/admin/auth/kaptcha").then((res) => {
-        this.code = res.data;
-      });
+      this.loginForm.code = ''
+      request.get('/admin/auth/kaptcha').then((res) => {
+        this.code = res.data
+      })
     },
     checkCapslock(e) {
-      const { key } = e;
-      this.capsTooltip = key && key.length === 1 && key >= "A" && key <= "Z";
+      const { key } = e
+      this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
     },
     showPwd() {
-      if (this.passwordType === "password") {
-        this.passwordType = "";
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
       } else {
-        this.passwordType = "password";
+        this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        this.$refs.password.focus();
-      });
+        this.$refs.password.focus()
+      })
     },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true;
+          this.loading = true
           this.$store
-            .dispatch("user/login", this.loginForm)
+            .dispatch('user/login', this.loginForm)
             .then(() => {
               this.$router.push({
-                path: this.redirect || "/",
-                query: this.otherQuery,
-              });
-              this.loading = false;
+                path: this.redirect || '/',
+                query: this.otherQuery
+              })
+              this.loading = false
             })
             .catch((res) => {
               // 刷新验证码
-              this.getCodeUrl();
-              this.loading = false;
-            });
+              this.getCodeUrl()
+              this.loading = false
+            })
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
     getOtherQuery(query) {
       return Object.keys(query).reduce((acc, cur) => {
-        if (cur !== "redirect") {
-          acc[cur] = query[cur];
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
         }
-        return acc;
-      }, {});
-    },
+        return acc
+      }, {})
+    }
     // afterQRScan() {
     //   if (e.key === 'x-admin-manage-oauth-code') {
     //     const code = getQueryObject(e.newValue)
@@ -300,8 +301,8 @@ export default {
     //     }
     //   }
     // }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss">

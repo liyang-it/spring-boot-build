@@ -1,5 +1,5 @@
 module.exports = {
-  title: '凯韵科技', // 页面title
+  title: '幸运抽奖机管理后台', // 页面title
 
   /**
    * @type {boolean} true | false

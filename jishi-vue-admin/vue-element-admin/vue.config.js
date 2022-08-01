@@ -39,7 +39,7 @@ module.exports = {
     },
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: 'http://localhost:9526/pms', // 代理目标后台地址
+        target: 'http://localhost:9526/pms', // 代理目标后台地址,只在开发环境有效
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''

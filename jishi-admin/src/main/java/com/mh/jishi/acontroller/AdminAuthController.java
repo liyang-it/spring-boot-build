@@ -163,7 +163,7 @@ public class AdminAuthController {
 
         } catch (AuthenticationException ae) {
             log.error("后台登录, 认证失败; 登录信息：【{}】", body);
-            return ResponseUtil.fail(501, "認證失敗");
+            return ResponseUtil.fail(501, "认证失败");
         }
 
         currentUser = SecurityUtils.getSubject();
@@ -182,8 +182,6 @@ public class AdminAuthController {
         Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("token", currentUser.getSession().getId());
         result.put("adminInfo", adminInfo);
-        // 清除验证码
-        redisUtil.del("kaptcha:".concat(IpUtil.getIpAddr(request)));
         return ResponseUtil.ok(result);
     }
 
@@ -247,19 +245,16 @@ public class AdminAuthController {
             }
         });
 
-
-        //Integer[] roleIds = admin.getRoleIds();
-        // Set<String> roles = roleService.queryByIds(roleIds);
-        // Set<String> permissions = permissionService.queryByRoleIds(roleIds);
-        // data.put("roles", roles);
-        // NOTE
-        // 这里需要转换perms结构，因为对于前端而已API形式的权限更容易理解
-        // data.put("perms", toApi(permissions));
-        // 獲取未讀消息數量
-//        Integer readCount = noticeMapper.queryNotReadCount(admin.getId());
-//        data.put("unReadCount", readCount);
-        // 查詢 管理員角色菜單
         /*
+        控制接口权限
+        Integer[] roleIds = admin.getRoleIds();
+         Set<String> roles = roleService.queryByIds(roleIds);
+         Set<String> permissions = permissionService.queryByRoleIds(roleIds);
+         data.put("roles", roles);
+         NOTE
+         // 这里需要转换perms结构，因为对于前端而已API形式的权限更容易理解
+         data.put("perms", toApi(permissions));
+        //  查詢 管理員角色菜單
         QueryWrapper<TRoleMenu> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("role_id", roleIds[0]);
         Map<String, Object> menu = LitemallRoleMenuService.getMap(queryWrapper);
@@ -274,8 +269,7 @@ public class AdminAuthController {
             }
             data.put("menu", m);
         }
-
-         */
+        */
         task1.get();
         task2.get();
         task3.get();

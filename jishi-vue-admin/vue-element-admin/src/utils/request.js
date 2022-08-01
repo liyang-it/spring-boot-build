@@ -1,7 +1,7 @@
 import axios from 'axios'
-import {Message} from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
-import {getToken} from '@/utils/auth'
+import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -50,16 +50,9 @@ service.interceptors.response.use(
   response => {
     const res = response.data
 
-    // if the custom code is not 20000, it is judged as an error.
-
-    // 状态码等于 0 请求正常， 601 未登录
-    // if (res.code !== 0) {
-    //   console.info('请求状态码不等于0')
-    //   Message({
-    //     message: res.message || 'Error',
-    //     type: 'error',
-    //     duration: 5 * 1000
-    //   })
+    /**
+     * 状态码 判断请求状态
+     */
     if (res.code === 601) {
       console.info('未登录')
       Message({
@@ -67,37 +60,17 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-      // location.reload()
-      // setInterval(()=>{
-      //   location.reload();
-      // }, 1000)
-
-      // 未登录
-      // }
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      // if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-      //   // to re-login
-      //   MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-      //     confirmButtonText: 'Re-Login',
-      //     cancelButtonText: 'Cancel',
-      //     type: 'warning'
-      //   }).then(() => {
-      //     store.dispatch('user/resetToken').then(() => {
-      //       location.reload()
-      //     })
-      //   })
-      // }
       return Promise.reject(new Error(res.message || 'Error'))
-    } else if(res.code === 506){
-
+    } else if (res.code === 506) {
       // 接口限流异常状态码
       Message({
         message: res.msg,
         type: 'info',
         duration: 5 * 1000
       })
+      return Promise.reject(new Error(res.message || 'Error'))
     } else if (res.code <= 505 && res.code > 0) {
-      // 状态码 0 是正常无异常
+      // 状态不是 0 都是异常
       Message({
         message: res.msg,
         type: 'error',
@@ -117,4 +90,4 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-export default service;
+export default service
