@@ -121,7 +121,14 @@ export const asyncRoutes = [
         path: '/admin/index',
         component: () => import('@/views/use/admin/index'),
         name: 'admin-plant-index',
-        meta: { title: '管理员列表', icon: 'edit' }
+        meta: {title: '管理员列表', icon: 'edit'}
+      },
+      {
+        path: '/admin/index',
+        component: () => import('@/views/use/admin/index'),
+        name: 'admin-plant-index',
+        meta: {title: '管理员列表', icon: 'edit'},
+        hidden: true // 不显示在 左侧导航栏菜单
       }
     ]
   },

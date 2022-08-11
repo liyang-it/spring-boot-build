@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import {Message} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -60,6 +61,11 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
+      setTimeout(() => {
+        router.push({
+          path: '/login'
+        })
+      }, 300);
       return Promise.reject(new Error(res.message || 'Error'))
     } else if (res.code === 506) {
       // 接口限流异常状态码
