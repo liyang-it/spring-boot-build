@@ -8,10 +8,8 @@ import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,6 +60,7 @@ public class ShiroConfig {
         securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
+
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor =
@@ -70,11 +69,14 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-    @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public static DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
-        creator.setProxyTargetClass(true);
-        return creator;
-    }
+    /**
+     * 去掉代理，不然AOP会出现两次代理<br>
+     * 参考博客：https://blog.csdn.net/weixin_43950014/article/details/124860288
+     @Bean
+     @DependsOn("lifecycleBeanPostProcessor") public static DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+     DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
+     creator.setProxyTargetClass(true);
+     return creator;
+     }
+     */
 }

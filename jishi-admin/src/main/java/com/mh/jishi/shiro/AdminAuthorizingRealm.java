@@ -15,11 +15,9 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,6 +42,12 @@ public class AdminAuthorizingRealm extends AuthorizingRealm {
     @Lazy
     private TAdminMapper adminMapper;
 
+    /**
+     * 只有标注以下两个注解的接口才会进入这个方法<br>
+     *
+     * @RequiresPermissions("xxxx")<br>
+     * @RequiresPermissionsDesc(menu = { "菜单一", "菜单一" }, button = "查询")
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         // 查询用户权限
