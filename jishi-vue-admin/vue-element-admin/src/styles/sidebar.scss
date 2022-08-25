@@ -10,7 +10,9 @@
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: $menuBg;
+    // background-color: $menuBg;
+    background: linear-gradient(90deg, #006cff, #399efd) !important;
+
     height: 100%;
     position: fixed;
     font-size: 0px;
@@ -76,14 +78,18 @@
       }
     }
 
-    .is-active>.el-submenu__title {
-      color: $subMenuActiveText !important;
+    .el-menu-item.is-active {
+      background-color: $subMenuHover !important;
     }
 
-    & .nest-menu .el-submenu>.el-submenu__title,
+    .is-active > .el-submenu__title {
+      color: $subMenuActiveText !important;
+
+    }
+
+    & .nest-menu .el-submenu > .el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
-      background-color: $subMenuBg !important;
 
       &:hover {
         background-color: $subMenuHover !important;
@@ -191,6 +197,7 @@
     .svg-icon {
       margin-right: 16px;
     }
+
     .sub-el-icon {
       margin-right: 12px;
       margin-left: -2px;
