@@ -78,6 +78,10 @@
       }
     }
 
+    .el-submenu__title i {
+      color: #f4f6fc;
+    }
+
     .el-menu-item.is-active {
       background-color: $subMenuHover !important;
     }
