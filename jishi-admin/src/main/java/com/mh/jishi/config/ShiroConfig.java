@@ -49,8 +49,14 @@ public class ShiroConfig {
 
     @Bean
     public SessionManager sessionManager() {
-
-        return new AdminWebSessionManager();
+		AdminWebSessionManager adminWebSessionManager = new AdminWebSessionManager();
+		adminWebSessionManager.setDeleteInvalidSessions(true);
+		// 当会话超过指定空闲时间(毫秒)后标记为过期，尽量不要设置-1.如果用户量大的话，内存会占用很大
+		adminWebSessionManager.setGlobalSessionTimeout(10000);
+		// 如果会话验证时为过期或者无效无效则删除这个会话，搭配setGlobalSessionTimeout使用
+		adminWebSessionManager.setDeleteInvalidSessions(true);
+		adminWebSessionManager.setSessionIdUrlRewritingEnabled(false);
+		return adminWebSessionManager;
     }
 
     @Bean
