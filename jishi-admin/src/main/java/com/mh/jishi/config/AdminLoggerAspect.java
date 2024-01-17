@@ -19,22 +19,24 @@ import java.util.Arrays;
  * @Description 日志切面类 关注请求层
  * @CreateTime 2021-08-19 下午 2:08
  **/
-@Aspect
-@Component
+//@Aspect
+//@Component
 @Slf4j
 public class AdminLoggerAspect {
-    //连接点
-    @Pointcut(value = "execution(* com.mh.jishi.acontroller..*(..)))")
-    public void logPointcut() {
-    }
-
+    
     /**
-    * 记录当前线程程序运行时间
-    * 使用 Netty 的 FastThreadLocal 替代 Jdk的 ThreadLocal
-    */
+     * 记录当前线程程序运行时间
+     * 使用 Netty 的 FastThreadLocal 替代 Jdk的 ThreadLocal
+     */
     FastThreadLocal<Long> startTime = new FastThreadLocal<Long>();
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm:ss");
-
+    
+    
+    //连接点
+    @Pointcut(value = "execution(* com.mh.jishi.controller..*(..)))")
+    public void logPointcut() {
+    }
+    
     //前置通知
     @Before("logPointcut()")
     public void BeforLogger(JoinPoint joinPoint) {
@@ -55,23 +57,22 @@ public class AdminLoggerAspect {
     //后置通知
     @AfterReturning(value = "logPointcut()", returning = "result")
     public void AfterReturningLogger(Object result) {
-        log.info("--------后台管理请求后置日志输出--------");
         //返回值
         try{
             ResponseUtil r =  (ResponseUtil)result;
             log.info("接口响应状态: " + r.getCode());
             log.info("接口响应信息: " + r.getMsg());
         }catch (Exception e){}
-        //程序运时间(毫秒)
         log.info("请求结束时间: " + dateTimeFormatter.format(LocalDateTime.now()));
         log.info("请求耗时: " + (System.currentTimeMillis() - startTime.get()) + " ms");
         startTime.remove();
     }
     //异常通知
-    @AfterThrowing(value = "logPointcut()")
-    public void ThrowingLogger() {
-        log.error("--------后台管理请求异常日志输出--------");
-        log.error("ErrorMessage：请根据异常产生时间前往异常日志查看相关信息");
+    @AfterThrowing(value = "logPointcut()", throwing = "throwable")
+    public void throwingLogger(Throwable throwable) {
+        
+        log.error("ErrorMessage：{}, 具体详情请根据异常产生时间前往下载异常日志查看相关信息", throwable.toString());
+        log.error("--------后台管理请求异常日志输出完成--------");
     }
 
 }

@@ -1,8 +1,8 @@
-package com.mh.jishi.acontroller;
+package com.mh.jishi.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.mh.jishi.acontroller.dto.AddOrUpdAdminDTO;
+import com.mh.jishi.controller.dto.AddOrUpdAdminDTO;
 import com.mh.jishi.annotation.RequiresPermissionsDesc;
 import com.mh.jishi.config.ServiceException;
 import com.mh.jishi.constants.RedisKeyPrefix;

@@ -1,38 +1,35 @@
 # 主程序 yml配置
-spring:
+spring: #时间戳统一转换
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   profiles:
     active: db_test
-  messages:
-    encoding: UTF-8
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+      max-file-size: -1
+      max-request-size: -1
+  ## 如果没有找到处理请求的处理程序，是否应抛出“NoHandlerFoundException”, 使用自定义处理全局异常处理需要设置为 true
   mvc:
     throw-exception-if-no-handler-found: true
+  ## 关闭默认资源处理，开启的话 如果404、500等错误 会调用SpringBoot默认异常页面处理
   resources:
     add-mappings: false
+## 正式环境端口： 15889
 server:
-  port: 9526
+  port: 1525
   compression:
     enabled: true
     min-response-size: 2048
     mime-types: application/javascript,text/css,application/json,application/xml,text/html,text/xml,text/plain
   servlet:
-    context-path: /pms
-      # 使用  undertow 替代 tomcat
+    context-path: /main
   undertow:
-    accesslog:
-      enabled: false
-    max-http-post-size: 0
-    io-threads: 16
-    worker-threads: 128
-    buffer-size: 1024
-    direct-buffers: true
-  # 去除tomcat, 使用 undertow
-#   tomcat:
-#     min-spare-threads: 100
-#     max-threads: 800
-#     accept-count: 700
+    max-http-post-size: -1
+    io-threads: 40
+    worker-threads: 320
 logging:
   config: classpath:logback-spring.xml
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

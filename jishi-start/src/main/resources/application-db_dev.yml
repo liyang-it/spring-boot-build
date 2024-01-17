@@ -1,29 +1,44 @@
-## 线上 mysql - redis
+## 正式 环境
 spring:
   datasource:
     druid:
-      url:  jdbc:mysql://127.0.0.1:3306/jishi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&rewriteBatchedStatements=true
-      driver-class-name:  com.mysql.cj.jdbc.Driver
-      username:  root
-      password:
-      initial-size:  10
-      max-active:  50
-      min-idle:  10
-      max-wait:  60000
-      pool-prepared-statements:  true
-      max-pool-prepared-statement-per-connection-size:  20
-      validation-query:  SELECT 1 FROM DUAL
-      test-on-borrow:  false
-      test-on-return:  false
-      test-while-idle:  true
-      time-between-eviction-runs-millis:  60000
-      webStatFilter:
-        enabled: true
-      statViewServlet:
-        enabled: false
+      url: jdbc:mysql://127.0.0.1:3306/jishi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 123456
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      ## Oracle/MySQL 建议关闭
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 1 FROM DUAL
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
       filter:
+        # 开启druid-datasource的状态监控
         stat:
-          enabled: false
+          enabled: true
+          db-type: mysql
+          # 开启慢sql监控，超过2s 就认为是慢sql，记录到日志中
+          log-slow-sql: true
+          slow-sql-millis: 2000
+      web-stat-filter:
+        enabled: true                   # 启动 StatFilter
+        url-pattern: /*                 # 过滤所有url
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" # 排除一些不必要的url
+        session-stat-enable: true       # 开启session统计功能
+        session-stat-max-count: 1000    # session的最大个数,默认100
+      stat-view-servlet:
+        enabled: true                   # 正常StatViewServlet
+        url-pattern: /druid/*           # 访问内置监控页面的路径，内置监控页面的首页是/druid/index.html
+        reset-enable: false              # 不允许清空统计数据,重新计算
+        login-username: admin            # 配置监控页面访问账号密码
+        login-password: 123456
+        allow:  # 留空表示 允许所有IP访问
   redis:
     # 地址
     host: 127.0.0.1
@@ -34,16 +49,16 @@ spring:
     # 超时时间，单位毫秒
     timeout: 10000
     # 数据库编号
-    database: 1
+    database: 0
     # 配置lettuce
     lettuce:
       pool:
         # 连接池中的最小空闲连接
-        min-idle: 100
+        min-idle: 5
         # 连接池中的最大空闲连接
-        max-idle: 600
+        max-idle: 10
         # 连接池最大连接数（使用负值表示没有限制,不要配置过大，否则可能会影响redis的性能）
-        max-active: 1000
+        max-active: 100
         # 连接池最大阻塞等待时间（使用负值表示没有限制）；单位毫秒
         max-wait: 5000
       #关闭超时时间；单位毫秒

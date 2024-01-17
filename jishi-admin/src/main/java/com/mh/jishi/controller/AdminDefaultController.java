@@ -1,22 +1,10 @@
-package com.mh.jishi.acontroller;
+package com.mh.jishi.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.mh.jishi.annotation.CurrentLimitingRequest;
-import com.mh.jishi.annotation.RequiresPermissionsDesc;
-import com.mh.jishi.entity.TAd;
-import com.mh.jishi.service.TAdService;
 import com.mh.jishi.util.IpUtil;
 import com.mh.jishi.util.ResponseUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

@@ -1,4 +1,4 @@
-package com.mh.jishi.acontroller;
+package com.mh.jishi.controller;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.json.JSONObject;

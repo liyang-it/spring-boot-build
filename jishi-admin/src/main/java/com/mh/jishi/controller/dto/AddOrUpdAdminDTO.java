@@ -1,9 +1,8 @@
-package com.mh.jishi.acontroller.dto;
+package com.mh.jishi.controller.dto;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**

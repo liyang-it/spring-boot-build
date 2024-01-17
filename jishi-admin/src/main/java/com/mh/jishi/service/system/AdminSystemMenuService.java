@@ -2,7 +2,7 @@ package com.mh.jishi.service.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.mh.jishi.acontroller.system.dto.AddOrUpdMenuDTO;
+import com.mh.jishi.controller.system.dto.AddOrUpdMenuDTO;
 import com.mh.jishi.config.ServiceException;
 import com.mh.jishi.constants.RedisKeyPrefix;
 import com.mh.jishi.entity.TAdmin;

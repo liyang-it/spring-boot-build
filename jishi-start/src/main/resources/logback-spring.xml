@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
     <contextName>logback</contextName>
-    <property name="log.path" value="logs" />
-
+    <!-- 日志文件 存储在 项目根路径-->
+    <!-- docker 方式部署日志文件 存储在 项目根路径 -->
+    <property name="log.path" value="logs"/>
+    
+    <!-- 控制台日志 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
@@ -10,17 +13,19 @@
         <encoder>
             <!--<pattern>%d %p (%file:%line\)- %m%n</pattern>-->
             <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
-            <pattern>%red(控制台输出-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>
+            <pattern>%red(日志输出-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)
+            </pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-
+    
+    <!-- info级别日志 -->
     <appender name="info" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/log.log</file>
+        <file>${log.path}/info.txt</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/log-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log.path}/info-%d{yyyy-MM-dd}.txt</fileNamePattern>
         </rollingPolicy>
-
+        
         <encoder>
             <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
             </pattern>
@@ -31,16 +36,16 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
-
+    
+    <!-- error级别日志 -->
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/error.log</file>
+        <file>${log.path}/error.txt</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.path}/error-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log.path}/error-%d{yyyy-MM-dd}.txt</fileNamePattern>
         </rollingPolicy>
-
+        
         <encoder>
-            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n
-            </pattern>
+            <pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n</pattern>
         </encoder>
         <!-- 此日志文件只记录ERROR级别的 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -49,19 +54,29 @@
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
-
-
-    <root level="ERROR">
-        <appender-ref ref="console" />
-        <appender-ref ref="info" />
-        <appender-ref ref="error" />
+    
+    <!--配置异步日志-->
+    <!--    <appender name="console_ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
+    <!--        <appender-ref ref="console"/>-->
+    <!--    </appender>-->
+    <!--    <appender name="info_ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
+    <!--        <appender-ref ref="info"/>-->
+    <!--    </appender>-->
+    <!--    <appender name="error_ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
+    <!--        <appender-ref ref="error"/>-->
+    <!--    </appender>-->
+    
+    
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="info"/>
+        <appender-ref ref="error"/>
     </root>
-    <logger name="org.mybatis" level="ERROR" />
-    <logger name="org.springframework" level="ERROR" />
-    <logger name="com.mh.jishi" level="DEBUG" />
-<!--    <logger name="org.linlinjava.litemall.core" level="DEBUG" />-->
-<!--    <logger name="org.linlinjava.litemall.db" level="DEBUG" />-->
-<!--    <logger name="org.linlinjava.litemall.admin" level="DEBUG" />-->
-<!--    <logger name="org.linlinjava.litemall.wx" level="DEBUG" />-->
-<!--    <logger name="org.linlinjava.litemall" level="ERROR" />-->
+    
+    <!-- 针对包路径 级别日志 -->
+    <logger name="org.mybatis" level="ERROR"/>
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="com.mh.jishi" level="INFO"/>
+    <!-- mapper 需要打印sql，日志级别为 debug -->
+    <!--    <logger name="com.mh.jishi.mapper" level="debug" />-->
 </configuration>

@@ -1,6 +1,6 @@
-package com.mh.jishi.acontroller.system;
+package com.mh.jishi.controller.system;
 
-import com.mh.jishi.acontroller.system.dto.AddOrUpdMenuDTO;
+import com.mh.jishi.controller.system.dto.AddOrUpdMenuDTO;
 import com.mh.jishi.annotation.RequiresPermissionsDesc;
 import com.mh.jishi.entity.TAdmin;
 import com.mh.jishi.service.TAdminService;

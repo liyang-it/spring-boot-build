@@ -32,18 +32,24 @@ import java.util.Set;
 @RestControllerAdvice
 @Order
 public class GlobalExceptionHandler {
-
-    private Log logger = LogFactory.getLog(GlobalExceptionHandler.class);
-    private Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    
+    private final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    
+    
     public String getRequestUrl(HttpServletRequest request){
         return request.getRequestURL().toString();
     }
+    
+    @ExceptionHandler(UnLoginException.class)
+    @ResponseBody
+    public Object UnLoginException(UnLoginException e, HttpServletRequest request) {
+        log.error("未登录访问接口, 接口地址: [{}]", getRequestUrl(request));
+        return ResponseUtil.unlogin();
+    }
+    
     @ExceptionHandler(ConcurrentUpdateException.class)
     @ResponseBody
     public Object ServiceException(ConcurrentUpdateException e, HttpServletRequest request) {
-        /**
-         * 自定义 运行时异常
-         */
         log.error("系统异常, 异常原因: [更新数据失败，数据已被其他线程修改], 接口地址: [{}]", getRequestUrl(request));
         return ResponseUtil.updateFailed();
     }

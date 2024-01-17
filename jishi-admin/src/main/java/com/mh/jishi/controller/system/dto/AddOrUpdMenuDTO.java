@@ -1,4 +1,4 @@
-package com.mh.jishi.acontroller.system.dto;
+package com.mh.jishi.controller.system.dto;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;

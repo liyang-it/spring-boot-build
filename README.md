@@ -1,14 +1,6 @@
-## 📚 这是一个springboot程序模版
-
-### 🛠️ 环境
-| 依赖             | 版本                 |
-|----------------|--------------------|
-| java            | >= 1.8            |
-| mysql       | >= 5.6               |
-| redis       | >= 3.0             |
-
-
+## 📚 这是一个springboot程序模版, JDK版本需要 1.8
 ### 🛠️整合的功能
+* 独立socket程序， 独立socket单独下载(去除，单独一个仓库)
 * 后台管理shiro权限控制
 * 移动端api jwt+token
 * 腾讯云短信模版
@@ -26,20 +18,18 @@
 * 待整合RabbitMQ。。。
 
 ### 🛠️文件结构说明
-| 模块              | 介绍                 |
-|-----------------|--------------------|
-| doc             | 项目文件 目录            |
-| doc.data        | 项目数据               |
-| doc.desc        | 项目说明文件             |
-| doc.sql         | sql                |
-| jishi-admin     | 后台管理接口、服务          |
-| jishi-api       | 移动端api             |
-| jishi-core      | 核心公共组件             |
-| jishi-db        | 数据库、服务层、实体类、mapper |
-| jishi-start     | 程序启动相关             |
-| logs            | 主程序日志目录            |
-| files           | 本地对象存储存储文件夹        |
-| jishi-vue-admin | vue管理后台            |
+| 模块             | 介绍                 |
+|----------------|--------------------|
+| doc            | 项目文件 目录            |
+| doc.data       | 项目数据               |
+| doc.desc       | 项目说明文件             |
+| doc.sql        | sql                |
+| jishi-admin    | 后台管理接口、服务          |
+| jishi-api    | 移动端api          |
+| jishi-core  | 核心公共组件             |
+| jishi-db      | 数据库、服务层、实体类、mapper |
+| jishi-start    | 程序启动相关             |
+| logs   | 主程序日志目录            |
 
 ### 🛠️资料信息
 

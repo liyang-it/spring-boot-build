@@ -1,4 +1,4 @@
-package com.mh.jishi.acontroller;
+package com.mh.jishi.controller;
 
 import com.mh.jishi.service.AdminStorageService;
 import com.mh.jishi.util.ResponseUtil;
