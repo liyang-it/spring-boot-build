@@ -1,12 +1,11 @@
 package com.mh.jishi.service;
-
-import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mh.jishi.entity.TRole;
 import com.mh.jishi.mapper.TRoleMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -47,7 +46,7 @@ public class TRoleService extends ServiceImpl<TRoleMapper, TRole> {
     public IPage<TRole> querySelective(String name, Integer page, Integer limit, String sort, String order) {
         IPage<TRole> iPage = new Page<>(page, limit);
         QueryWrapper<TRole> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(!StringUtils.isEmpty(name), "name", name);
+        queryWrapper.like(StringUtils.isNotBlank(name), "name", name);
         queryWrapper.eq("deleted", 0);
         if(order.equals("desc")){
             queryWrapper.orderByDesc(sort);

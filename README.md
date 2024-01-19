@@ -1,4 +1,7 @@
 ## 📚 这是一个springboot程序模版, JDK版本需要 1.8
+ JDK: `1.8`
+ 项目编码: IDE全局修改`UTF-8`
+ 开启`Lombok`
 ### 🛠️整合的功能
 * 独立socket程序， 独立socket单独下载(去除，单独一个仓库)
 * 后台管理shiro权限控制

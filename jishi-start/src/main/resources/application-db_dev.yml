@@ -1,44 +1,18 @@
 ## 正式 环境
 spring:
   datasource:
-    druid:
-      url: jdbc:mysql://127.0.0.1:3306/jishi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/jishi?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&rewriteBatchedStatements=true&zeroDateTimeBehavior=convertToNull
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
       username: root
       password: 123456
-      initial-size: 10
-      max-active: 100
-      min-idle: 10
-      max-wait: 60000
-      ## Oracle/MySQL 建议关闭
-      pool-prepared-statements: false
-      max-pool-prepared-statement-per-connection-size: 20
-      validation-query: SELECT 1 FROM DUAL
-      test-on-borrow: false
-      test-on-return: false
-      test-while-idle: true
-      time-between-eviction-runs-millis: 60000
-      filter:
-        # 开启druid-datasource的状态监控
-        stat:
-          enabled: true
-          db-type: mysql
-          # 开启慢sql监控，超过2s 就认为是慢sql，记录到日志中
-          log-slow-sql: true
-          slow-sql-millis: 2000
-      web-stat-filter:
-        enabled: true                   # 启动 StatFilter
-        url-pattern: /*                 # 过滤所有url
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" # 排除一些不必要的url
-        session-stat-enable: true       # 开启session统计功能
-        session-stat-max-count: 1000    # session的最大个数,默认100
-      stat-view-servlet:
-        enabled: true                   # 正常StatViewServlet
-        url-pattern: /druid/*           # 访问内置监控页面的路径，内置监控页面的首页是/druid/index.html
-        reset-enable: false              # 不允许清空统计数据,重新计算
-        login-username: admin            # 配置监控页面访问账号密码
-        login-password: 123456
-        allow:  # 留空表示 允许所有IP访问
+      minimum-idle: 10        # 连接池最小连接
+      maximum-pool-size: 100  # 连接池最大连接
+      auto-commit: true       # 自动提交
+      pool-name: JishiHikariCP  # 连接池名称
+      idle-timeout: 600000    # 连接最大空闲时间(毫秒)，超过后删除
+      max-lifetime: 28740000  # 连接的最长生命周期。当连接达到此超时时，即使最近使用过，它也会从池中退役。正在使用的连接永远不会被退休，只有当它空闲时才会被删除
+      connection-test-query: SELECT 1 FROM DUAL # 测试SQL
   redis:
     # 地址
     host: 127.0.0.1

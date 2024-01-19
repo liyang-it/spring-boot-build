@@ -1,9 +1,9 @@
 package com.mh.jishi.shiro;
 
-import com.alibaba.druid.util.StringUtils;
 import com.mh.jishi.service.TAdminService;
 import com.mh.jishi.service.TPermissionService;
 import com.mh.jishi.service.TRoleService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.servlet.ShiroHttpServletRequest;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.WebUtils;
@@ -41,7 +41,7 @@ public class AdminWebSessionManager extends DefaultWebSessionManager {
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
         String id = WebUtils.toHttp(request).getHeader(LOGIN_TOKEN_KEY);
-        if (!StringUtils.isEmpty(id)) {
+        if (StringUtils.isNotBlank(id)) {
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, "url");
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, id);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
